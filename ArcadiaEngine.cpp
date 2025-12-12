@@ -187,14 +187,94 @@ bool WorldNavigator::pathExists(int n, vector<vector<int>>& edges, int source, i
     return false;
 }
 
+
 long long WorldNavigator::minBribeCost(int n, int m, long long goldRate, long long silverRate,
-                                       vector<vector<int>>& roadData) {
+                                       vector<vector<int>>& roadData)
+{
     // TODO: Implement Minimum Spanning Tree (Kruskal's or Prim's)
     // roadData[i] = {u, v, goldCost, silverCost}
     // Total cost = goldCost * goldRate + silverCost * silverRate
     // Return -1 if graph cannot be fully connected
-    return -1;
+    // Build adjacency list: each entry -> (neighbor, weight)
+
+
+    //adjacency list, each entry has a connected vertex and the weight to get there from a pair
+    vector<vector<pair<int,long long>>> adjacencyList(n);
+
+    //start by setting up the adjacency list
+    for (int i =0 ; i < roadData.size(); ++i) {
+        //first two entries in road data are the two vertices
+        int u = roadData[i][0];
+        int v = roadData[i][1];
+        //third entry is the gold value
+        long long gold  = roadData[i][2];
+        //forth entry is the silver value
+        long long silver = roadData[i][3];
+
+        //calculate the total cost of the road/edge
+        long long w = gold * goldRate + silver * silverRate;
+
+        //add the connected vertex and weight info to the adjacency list
+        adjacencyList[u].push_back({v, w});
+        adjacencyList[v].push_back({u, w});
+    }
+
+    // vector to keep track of the min key to reach a vertex
+    vector<long long> key(n, LLONG_MAX);
+    //vector of vertices we have visited
+    vector<bool> seen(n, false);
+
+    //prio queue of (key, vertex)
+    //priority_queue<Type, Container, Comparator>
+    priority_queue<pair<long long,int>,
+                   vector<pair<long long,int>>,
+                   greater<pair<long long,int>>> pq;
+
+    //start from vertex 0 (or any vertex)
+    key[0] = 0;
+    pq.push({0, 0});
+
+    long long mstCost = 0;
+    int visitedCount = 0;
+
+    //loop until the queue is empty (we have checked all nodes)
+    while (!pq.empty()) {
+        //get the lowest key element from the queue
+        pair<long long,int> currNode = pq.top();
+        pq.pop();
+
+        //node index is the second value in the pair
+        int nodeIndex = currNode.second;
+        //node wight is the first value in the pair
+        int nodeWeight = currNode.first;
+
+        //skip stale/repeated entries
+        if (seen[nodeIndex]) continue;
+
+        seen[nodeIndex] = true;
+        mstCost += nodeWeight;
+        visitedCount++;
+
+        //check all adjacent nodes to the current node we are on, and add it to the queue
+        for (int i =0; i < adjacencyList[nodeIndex].size(); ++i) {
+            int vertex = adjacencyList[nodeIndex][i].first;
+            long long weight = adjacencyList[nodeIndex][i].second;
+
+            //if vertex not in MST and weight < the last updated weight: update the key and add to queue
+            if (!seen[vertex] && weight < key[vertex]) {
+                key[vertex] = weight; //update weight
+                pq.push({weight, vertex}); // add to queue
+            }
+        }
+    }
+
+    //if we visited all vertices → MST completed
+    if (visitedCount == n)
+        return mstCost;
+
+    return -1; //graph is disconnected
 }
+
 
 string WorldNavigator::sumMinDistancesBinary(int n, vector<vector<int>>& roads) {
     long long INF = 1e18;
@@ -289,7 +369,52 @@ int main(){
     cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
 
     //goz2 seif :D
+    //TESTING PATH EXISTS
     vector<vector<int>> graph3= {{0,1},{0,2}, {3,4}};
     cout << WorldNavigator::pathExists(5, graph3, 0, 4  ) << endl; // 1--->4 should return false
     cout << WorldNavigator::pathExists(5, graph3, 1, 2  ) << endl; // 1--->2 should return true
+
+    //TESTING MIN BRIBE COST
+    // Example 1: connected graph
+    int n = 3; // number of cities
+    int m = 3; // number of roads
+    long long goldRate = 1;
+    long long silverRate = 1;
+
+    // roadData: {u, v, goldCost, silverCost}
+    vector<vector<int>> roads = {
+        {0,1,10,0},
+        {1,2,5,0},
+        {0,2,20,0}
+    };
+
+    long long cost = WorldNavigator::minBribeCost(n, m, goldRate, silverRate, roads);
+    cout << "MST cost (Example 1): " << cost << endl; // Expected: 15
+
+    // Example 2: disconnected graph
+    n = 4;
+    m = 2;
+    vector<vector<int>> roads2 = {
+        {0,1,5,0},
+        {2,3,7,0}
+    };
+
+    cost = WorldNavigator::minBribeCost(n, m, goldRate, silverRate, roads2);
+    cout << "MST cost (Example 2): " << cost << endl; // Expected: -1 (disconnected)
+
+    // Example 3: graph with both gold and silver costs
+    n = 3;
+    m = 3;
+    goldRate = 2;
+    silverRate = 3;
+    vector<vector<int>> roads3 = {
+        {0,1,1,2}, // cost = 1*2 + 2*3 = 2 + 6 = 8
+        {1,2,2,1}, // cost = 2*2 + 1*3 = 4 + 3 = 7
+        {0,2,3,1}  // cost = 3*2 + 1*3 = 6 + 3 = 9
+    };
+
+    cost = WorldNavigator::minBribeCost(n, m, goldRate, silverRate, roads3);
+    cout << "MST cost (Example 3): " << cost << endl; // Expected: 8 + 7 = 15
+
+    return 0;
 }
