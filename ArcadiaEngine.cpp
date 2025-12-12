@@ -279,17 +279,13 @@ long long WorldNavigator::minBribeCost(int n, int m, long long goldRate, long lo
 string WorldNavigator::sumMinDistancesBinary(int n, vector<vector<int>>& roads) {
     const long long INF = 9999999999999;
     vector<vector<long long>> distance(n, vector<long long>(n,INF));
-    vector<vector<bool>> connectedVertex(n,vector<bool>(n, false));
     for(int i = 0; i < n; ++i) {
         distance[i][i] = 0;
-        connectedVertex[i][i]= true;
     }
     for(int i = 0; i < roads.size(); ++i) {
-        connectedVertex[roads[i][0]][roads[i][1]] = true;
-        connectedVertex[roads[i][1]][roads[i][0]] = true;
         if (roads[i][2]<distance[roads[i][0]][roads[i][1]]) {
             distance[roads[i][0]][roads[i][1]] = roads[i][2];
-            distance[roads[i][1]][roads[i][0]] = roads[i][2];
+            //distance[roads[i][1]][roads[i][0]] = roads[i][2];
         }
     }
     for (int k = 0; k < n; ++k) {
