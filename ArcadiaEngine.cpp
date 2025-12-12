@@ -268,7 +268,7 @@ long long WorldNavigator::minBribeCost(int n, int m, long long goldRate, long lo
         }
     }
 
-    //if we visited all vertices → MST completed
+    //if we visited all vertices then MST completed
     if (visitedCount == n)
         return mstCost;
 
@@ -368,6 +368,9 @@ int main(){
    cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
     cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
 
+
+    //----------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------
     //goz2 seif :D
     //TESTING PATH EXISTS
     vector<vector<int>> graph3= {{0,1},{0,2}, {3,4}};
@@ -375,46 +378,28 @@ int main(){
     cout << WorldNavigator::pathExists(5, graph3, 1, 2  ) << endl; // 1--->2 should return true
 
     //TESTING MIN BRIBE COST
-    // Example 1: connected graph
-    int n = 3; // number of cities
-    int m = 3; // number of roads
-    long long goldRate = 1;
-    long long silverRate = 1;
+    //example 1: connected graph
+    //roadData: {u, v, goldCost, silverCost}
+    vector<vector<int>> roads = {{0,1,10,0},{1,2,5,0},{0,2,20,0}};
 
-    // roadData: {u, v, goldCost, silverCost}
-    vector<vector<int>> roads = {
-        {0,1,10,0},
-        {1,2,5,0},
-        {0,2,20,0}
-    };
+    long long cost = WorldNavigator::minBribeCost(3, 3, 1, 1, roads);
+    cout << "MST cost (Example 1): " << cost << endl; //expected: 15
 
-    long long cost = WorldNavigator::minBribeCost(n, m, goldRate, silverRate, roads);
-    cout << "MST cost (Example 1): " << cost << endl; // Expected: 15
+    //example 2: disconnected graph
+    vector<vector<int>> roads2 = {{0,1,5,0},{2,3,7,0}};
 
-    // Example 2: disconnected graph
-    n = 4;
-    m = 2;
-    vector<vector<int>> roads2 = {
-        {0,1,5,0},
-        {2,3,7,0}
-    };
+    cost = WorldNavigator::minBribeCost(4, 2, 1, 1, roads2);
+    cout << "MST cost (Example 2): " << cost << endl; //expected: -1 (disconnected)
 
-    cost = WorldNavigator::minBribeCost(n, m, goldRate, silverRate, roads2);
-    cout << "MST cost (Example 2): " << cost << endl; // Expected: -1 (disconnected)
-
-    // Example 3: graph with both gold and silver costs
-    n = 3;
-    m = 3;
-    goldRate = 2;
-    silverRate = 3;
+    //example 3: graph with both gold and silver costs
     vector<vector<int>> roads3 = {
         {0,1,1,2}, // cost = 1*2 + 2*3 = 2 + 6 = 8
         {1,2,2,1}, // cost = 2*2 + 1*3 = 4 + 3 = 7
         {0,2,3,1}  // cost = 3*2 + 1*3 = 6 + 3 = 9
     };
 
-    cost = WorldNavigator::minBribeCost(n, m, goldRate, silverRate, roads3);
-    cout << "MST cost (Example 3): " << cost << endl; // Expected: 8 + 7 = 15
+    cost = WorldNavigator::minBribeCost(3, 3, 2, 3, roads3);
+    cout << "MST cost (Example 3): " << cost << endl; //expected: 8 + 7 = 15
 
     return 0;
 }
