@@ -277,7 +277,7 @@ long long WorldNavigator::minBribeCost(int n, int m, long long goldRate, long lo
 
 
 string WorldNavigator::sumMinDistancesBinary(int n, vector<vector<int>>& roads) {
-    long long INF = 1e18;
+    const long long INF = 9999999999999;
     vector<vector<long long>> distance(n, vector<long long>(n,INF));
     vector<vector<bool>> connectedVertex(n,vector<bool>(n, false));
     for(int i = 0; i < n; ++i) {
@@ -295,8 +295,7 @@ string WorldNavigator::sumMinDistancesBinary(int n, vector<vector<int>>& roads) 
     for (int k = 0; k < n; ++k) {
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) {
-                if (connectedVertex[i][k]&& connectedVertex[k][j]) {
-                    connectedVertex[i][j] = true;
+                if (distance[i][k]!=INF && distance[k][j]!=INF){
                     if (distance[i][j] > distance[i][k] + distance[k][j]) {
                         distance[i][j] = distance[i][k] + distance[k][j];
                     }
@@ -310,6 +309,7 @@ string WorldNavigator::sumMinDistancesBinary(int n, vector<vector<int>>& roads) 
             if (distance[i][j]!=INF) sum += distance[i][j];
         }
     }
+//    cout << sum << "\n";
 //    for (int i = 0; i < n; ++i) {
 //        for (int j = 0; j < n; ++j) {
 //            cout << to_string(distance[i][j]) + " ";
@@ -361,45 +361,47 @@ AuctionTree* createAuctionTree() {
 }
 
 int main(){
+    //goz2 Essam
 //    vector<int> v = {1,2,3,4,7};
 //    InventorySystem::optimizeLootSplit(v.size(),v);
     vector<vector<int>> graph= {{0,1,1},{1,2,2}};
     vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
-   cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
+    vector<vector<int>> graph3= {{0,1,4}};
+    cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
+    cout << WorldNavigator::sumMinDistancesBinary(2,graph3) << endl;
     cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
-
 
     //----------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------
     //goz2 seif :D
     //TESTING PATH EXISTS
-    vector<vector<int>> graph3= {{0,1},{0,2}, {3,4}};
-    cout << WorldNavigator::pathExists(5, graph3, 0, 4  ) << endl; // 1--->4 should return false
-    cout << WorldNavigator::pathExists(5, graph3, 1, 2  ) << endl; // 1--->2 should return true
-
-    //TESTING MIN BRIBE COST
-    //example 1: connected graph
-    //roadData: {u, v, goldCost, silverCost}
-    vector<vector<int>> roads = {{0,1,10,0},{1,2,5,0},{0,2,20,0}};
-
-    long long cost = WorldNavigator::minBribeCost(3, 3, 1, 1, roads);
-    cout << "MST cost (Example 1): " << cost << endl; //expected: 15
-
-    //example 2: disconnected graph
-    vector<vector<int>> roads2 = {{0,1,5,0},{2,3,7,0}};
-
-    cost = WorldNavigator::minBribeCost(4, 2, 1, 1, roads2);
-    cout << "MST cost (Example 2): " << cost << endl; //expected: -1 (disconnected)
-
-    //example 3: graph with both gold and silver costs
-    vector<vector<int>> roads3 = {
-        {0,1,1,2}, // cost = 1*2 + 2*3 = 2 + 6 = 8
-        {1,2,2,1}, // cost = 2*2 + 1*3 = 4 + 3 = 7
-        {0,2,3,1}  // cost = 3*2 + 1*3 = 6 + 3 = 9
-    };
-
-    cost = WorldNavigator::minBribeCost(3, 3, 2, 3, roads3);
-    cout << "MST cost (Example 3): " << cost << endl; //expected: 8 + 7 = 15
+//    vector<vector<int>> graph3= {{0,1},{0,2}, {3,4}};
+//    cout << WorldNavigator::pathExists(5, graph3, 0, 4  ) << endl; // 1--->4 should return false
+//    cout << WorldNavigator::pathExists(5, graph3, 1, 2  ) << endl; // 1--->2 should return true
+//
+//    //TESTING MIN BRIBE COST
+//    //example 1: connected graph
+//    //roadData: {u, v, goldCost, silverCost}
+//    vector<vector<int>> roads = {{0,1,10,0},{1,2,5,0},{0,2,20,0}};
+//
+//    long long cost = WorldNavigator::minBribeCost(3, 3, 1, 1, roads);
+//    cout << "MST cost (Example 1): " << cost << endl; //expected: 15
+//
+//    //example 2: disconnected graph
+//    vector<vector<int>> roads2 = {{0,1,5,0},{2,3,7,0}};
+//
+//    cost = WorldNavigator::minBribeCost(4, 2, 1, 1, roads2);
+//    cout << "MST cost (Example 2): " << cost << endl; //expected: -1 (disconnected)
+//
+//    //example 3: graph with both gold and silver costs
+//    vector<vector<int>> roads3 = {
+//        {0,1,1,2}, // cost = 1*2 + 2*3 = 2 + 6 = 8
+//        {1,2,2,1}, // cost = 2*2 + 1*3 = 4 + 3 = 7
+//        {0,2,3,1}  // cost = 3*2 + 1*3 = 6 + 3 = 9
+//    };
+//
+//    cost = WorldNavigator::minBribeCost(3, 3, 2, 3, roads3);
+//    cout << "MST cost (Example 3): " << cost << endl; //expected: 8 + 7 = 15
 
     return 0;
 }
