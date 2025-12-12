@@ -118,7 +118,7 @@ int InventorySystem::optimizeLootSplit(int n, vector<int>& coins) {
             break;
         }
     }
-    int difference = totalCoins - 2 * closestSum;
+    int difference = abs(closestSum - (totalCoins-closestSum));
     return difference;
     // TODO: Implement partition problem using DP
     // Goal: Minimize |closestSum(subset1) - closestSum(subset2)|
@@ -358,14 +358,20 @@ AuctionTree* createAuctionTree() {
 
 int main(){
     //goz2 Essam
-//    vector<int> v = {1,2,3,4,7};
-//    InventorySystem::optimizeLootSplit(v.size(),v);
-    vector<vector<int>> graph= {{0,1,1},{1,2,2}};
-    vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
-    vector<vector<int>> graph3= {{0,1,4}};
-    cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
-    cout << WorldNavigator::sumMinDistancesBinary(2,graph3) << endl;
-    cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
+    vector<int> v = {1,2,3,4,7};
+    cout << InventorySystem::optimizeLootSplit(v.size(),v);
+//    vector<vector<int>> graph= {{0,1,1},{1,2,2}};
+//    vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
+//    vector<vector<int>> graph3= {{0,1,4}};
+//    vector<vector<int>> graph4 = {{0,1,4},{0,1,2}}; // different paths same city
+//    vector<vector<int>> graph5 = {{0,1,1},{1,2,2},{2,3,4}};
+//    vector<vector<int>> empty = {}; //empty
+//    cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
+//    cout << WorldNavigator::sumMinDistancesBinary(2,graph3) << endl;
+//    cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
+//    cout << WorldNavigator::sumMinDistancesBinary(2,graph4) << endl;
+//    cout << WorldNavigator::sumMinDistancesBinary(4,graph5) << endl;
+//    cout << WorldNavigator::sumMinDistancesBinary(1,empty) << endl;
 
     //----------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------
