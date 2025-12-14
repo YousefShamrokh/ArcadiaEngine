@@ -98,10 +98,13 @@ public:
         int hash2 = h2(playerID);
 
         for (int i = 0; i < tableSize; i++) {
+            //hasing id
             int id = (hash1 + (i * hash2)) % tableSize;
+            //looking for player in the hash table
             if (table[id].occupied && table[id].playerId == playerID) {
                 return table[id].playerName;
             }
+            //to save time if the first hash is not occupied that means that the player is not in the hash table
             if (!table[id].occupied) {
                 return "";
             }
@@ -818,7 +821,29 @@ int ServerKernel::minIntervals(vector<char>& tasks, int n) {
     // Same task must wait 'n' intervals before running again
     // Return minimum total intervals needed (including idle time)
     // Hint: Use greedy approach with frequency counting
-    return 0;
+    if (tasks.empty()) return 0;
+
+    int freq[26] = {0};
+
+    for (char task : tasks) {
+        freq[task - 'A']++;
+    }
+
+    int maxFreq = 0;
+    for (int count : freq) {
+        maxFreq = max(maxFreq, count);
+    }
+
+    int countMaxFreq = 0;
+    for (int count : freq) {
+        if (count == maxFreq) {
+            countMaxFreq++;
+        }
+    }
+
+    int calculatedIntervals = (maxFreq - 1) * (n + 1) + countMaxFreq;
+
+    return max(calculatedIntervals, (int)tasks.size());
 }
 
 // =========================================================
