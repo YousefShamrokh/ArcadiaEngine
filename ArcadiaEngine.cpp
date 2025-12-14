@@ -669,26 +669,22 @@ long long WorldNavigator::minBribeCost(int n, int m, long long goldRate, long lo
 
 
 string WorldNavigator::sumMinDistancesBinary(int n, vector<vector<int>>& roads) {
-    const long long INF = 9999999999999;
-    vector<vector<long long>> distance(n, vector<long long>(n,INF));
-    vector<vector<bool>> connectedVertex(n,vector<bool>(n, false));
+    const long long INF = 9999999999999; //const large value representing infinity/unreachable nodes
+    vector<vector<long long>> distance(n, vector<long long>(n,INF)); // 2d array calculating shortest distances in graph
     for(int i = 0; i < n; ++i) {
-        distance[i][i] = 0;
-        connectedVertex[i][i]= true;
+        distance[i][i] = 0; // initializes diagonal points as 0
     }
     for(int i = 0; i < roads.size(); ++i) {
-        connectedVertex[roads[i][0]][roads[i][1]] = true;
-        connectedVertex[roads[i][1]][roads[i][0]] = true;
-        if (roads[i][2]<distance[roads[i][0]][roads[i][1]]) {
+        if (roads[i][2]<distance[roads[i][0]][roads[i][1]]) { // adds edges from roads into distance 2d array
             distance[roads[i][0]][roads[i][1]] = roads[i][2];
-            distance[roads[i][1]][roads[i][0]] = roads[i][2];
+            //distance[roads[i][1]][roads[i][0]] = roads[i][2];
         }
     }
-    for (int k = 0; k < n; ++k) {
+    for (int k = 0; k < n; ++k) { // performs Floyd Warshall algorithm
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) {
-                if (distance[i][k]!=INF && distance[k][j]!=INF){
-                    if (distance[i][j] > distance[i][k] + distance[k][j]) {
+                if (distance[i][k]!=INF && distance[k][j]!=INF){ // checks if two indices are not infinity and there's a direct path since algorithm calculates shortest distance between every pair of node
+                    if (distance[i][j] > distance[i][k] + distance[k][j]) { //checks if path going through k gives shorter distance
                         distance[i][j] = distance[i][k] + distance[k][j];
                     }
                 }
@@ -696,7 +692,7 @@ string WorldNavigator::sumMinDistancesBinary(int n, vector<vector<int>>& roads) 
         }
     }
     long long sum = 0;
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) { // adding elems from distance 2d arr into total sum
         for (int j = i+1; j < n; ++j) {
             if (distance[i][j]!=INF) sum += distance[i][j];
         }
@@ -754,14 +750,14 @@ AuctionTree* createAuctionTree() {
 
 int main(){
     //goz2 Essam
-//    vector<int> v = {1,2,3,4,7};
-//    InventorySystem::optimizeLootSplit(v.size(),v);
-//    vector<vector<int>> graph= {{0,1,1},{1,2,2}};
-//    vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
-//    vector<vector<int>> graph3= {{0,1,4}};
-//    cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
-//    cout << WorldNavigator::sumMinDistancesBinary(2,graph3) << endl;
-//    cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
+    vector<int> v = {1,2,3,4,7};
+    InventorySystem::optimizeLootSplit(v.size(),v);
+    vector<vector<int>> graph= {{0,1,1},{1,2,2}};
+    vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
+    vector<vector<int>> graph3= {{0,1,4}};
+    cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
+    cout << WorldNavigator::sumMinDistancesBinary(2,graph3) << endl;
+    cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
 
     //----------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------
@@ -798,34 +794,34 @@ int main(){
 
 //   //----------------------------------------------------------------------------------
     //goz2 Youki
-    AuctionTree* tree = new ConcreteAuctionTree();
-
-    cout << "===== INSERTIONS =====\n";
-    tree->insertItem(10, 50);
-    tree->insertItem(20, 40);
-    tree->insertItem(30, 60);
-    tree->insertItem(15, 40);
-    tree->insertItem(25, 55);
-    tree->insertItem(5, 50);
-
-    cout << "\nTree after inserts:\n";
-    ((ConcreteAuctionTree*)tree)->visualize();
-
-    cout << "\n===== DELETE itemID 20 =====\n";
-    tree->deleteItem(20);
-    ((ConcreteAuctionTree*)tree)->visualize();
-
-    cout << "\n===== DELETE itemID 10 =====\n";
-    tree->deleteItem(10);
-    ((ConcreteAuctionTree*)tree)->visualize();
-
-    cout << "\n===== DELETE itemID 30 =====\n";
-    tree->deleteItem(30);
-    ((ConcreteAuctionTree*)tree)->visualize();
-
-    cout << "\n===== FINAL TREE =====\n";
-    ((ConcreteAuctionTree*)tree)->visualize();
-
-    delete tree;
+//    AuctionTree* tree = new ConcreteAuctionTree();
+//
+//    cout << "===== INSERTIONS =====\n";
+//    tree->insertItem(10, 50);
+//    tree->insertItem(20, 40);
+//    tree->insertItem(30, 60);
+//    tree->insertItem(15, 40);
+//    tree->insertItem(25, 55);
+//    tree->insertItem(5, 50);
+//
+//    cout << "\nTree after inserts:\n";
+//    ((ConcreteAuctionTree*)tree)->visualize();
+//
+//    cout << "\n===== DELETE itemID 20 =====\n";
+//    tree->deleteItem(20);
+//    ((ConcreteAuctionTree*)tree)->visualize();
+//
+//    cout << "\n===== DELETE itemID 10 =====\n";
+//    tree->deleteItem(10);
+//    ((ConcreteAuctionTree*)tree)->visualize();
+//
+//    cout << "\n===== DELETE itemID 30 =====\n";
+//    tree->deleteItem(30);
+//    ((ConcreteAuctionTree*)tree)->visualize();
+//
+//    cout << "\n===== FINAL TREE =====\n";
+//    ((ConcreteAuctionTree*)tree)->visualize();
+//
+//    delete tree;
     return 0;
 }
