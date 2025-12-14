@@ -77,21 +77,413 @@ class ConcreteAuctionTree : public AuctionTree {
 private:
     // TODO: Define your Red-Black Tree node structure
     // Hint: Each node needs: id, price, color, left, right, parent pointers
+    enum Color { RED, BLACK };
+
+    struct Node{
+        int itemID;
+        int price;
+        Color color;
+        Node* left;
+        Node* right;
+        Node* parent;
+        Node(int id=0, int p=0) : itemID(id), price(p), color(RED), left(nullptr), right(nullptr), parent(nullptr) {}
+    };
+
+    Node* root;
+    Node* NIL;
+
+    // Create a new node
+    Node* createNode(int id, int price) {
+        Node* n = new Node(id, price);
+        n->left = n->right = n->parent = NIL;
+        n->color = RED;
+        return n;
+    }
+
+    // Left rotate function
+    void leftRotate(Node* x) {
+        Node* y = x->right; // let y be x's right child
+
+        x->right = y->left; // turn y's left subtree into x's right subtree
+
+        // update parent pointer of y's left child
+        if (y->left != NIL)
+            y->left->parent = x;
+
+        // let x's parent be y's parent
+        y->parent = x->parent;
+
+        // update root or x's parent's child pointer
+        if (x->parent == NIL)
+            root = y;
+
+        // if x is a left child
+        else if (x == x->parent->left)
+            // let y be the left child of x's parent
+            x->parent->left = y;
+        else
+            x->parent->right = y;
+
+        y->left = x;
+        x->parent = y;
+    }
+
+    // Right rotate function
+    void rightRotate(Node* x) {
+        Node* y = x->left;
+        x->left = y->right;
+
+        if (y->right != NIL)
+            y->right->parent = x;
+
+        y->parent = x->parent;
+
+        if (x->parent == NIL)
+            root = y;
+        else if (x == x->parent->right)
+            x->parent->right = y;
+        else
+            x->parent->left = y;
+
+        y->right = x;
+        x->parent = y;
+    }
+
+    // insert fix function
+    void insertFix(Node* z) {
+        // fix the red-black tree that will only happen if z's parent is red also
+        while (z->parent->color == RED) {
+            // case A: z's parent is a left child
+            if (z->parent == z->parent->parent->left) {
+                // y is z's uncle
+                Node* y = z->parent->parent->right;
+
+                // case 1: uncle is red
+                if (y->color == RED) {
+                    // recolor parent and uncle to black and grandparent to red
+                    z->parent->color = BLACK;
+                    y->color = BLACK;
+                    z->parent->parent->color = RED;
+                    // move z up the tree to check if there is any violations
+                    z = z->parent->parent;
+                }
+                // case 2 and 3: uncle is black
+                else {
+                    // case 2: z is a right child
+                    if (z == z->parent->right) {
+                        // move z up the tree and make left rotation on parent
+                        z = z->parent;
+                        leftRotate(z);
+                    }
+                    // case 3: z is a left child
+                    // recolor parent to black and grandparent to red
+                    z->parent->color = BLACK;
+                    z->parent->parent->color = RED;
+                    // right rotate on grandparent
+                    rightRotate(z->parent->parent);
+                }
+            }
+            // case B: z's parent is a right child
+            else {
+                // y is z's uncle
+                Node* y = z->parent->parent->left;
+
+                // case 1: uncle is red
+                if (y->color == RED) {
+                    z->parent->color = BLACK;
+                    y->color = BLACK;
+                    z->parent->parent->color = RED;
+                    z = z->parent->parent;
+                }
+                // case 2 and 3: uncle is black
+                else {
+                    if (z == z->parent->left) {
+                        z = z->parent;
+                        rightRotate(z);
+                    }
+                    // case 3: z is a right child
+                    z->parent->color = BLACK;
+                    z->parent->parent->color = RED;
+                    // left rotate on grandparent
+                    leftRotate(z->parent->parent);
+                }
+            }
+        }
+        // to make sure that the root is always black
+        root->color = BLACK;
+    }
+
+    // transplant function for deletion
+    void transplant(Node* u, Node* v) {
+        // if u is root
+        if (u->parent == NIL)
+            // make v the new root
+            root = v;
+        // if u is a left child
+        else if (u == u->parent->left)
+            // make v the left child of u's parent
+            u->parent->left = v;
+        else
+            // make v the right child of u's parent
+            u->parent->right = v;
+
+        // make u's parent be v's parent
+        v->parent = u->parent;
+    }
+
+    // minimum function for deletion
+    Node* minimum(Node* x) {
+        while (x->left != NIL)
+            x = x->left;
+        return x;
+    }
+
+    // delete fix function
+    void deleteFix(Node* x) {
+        // fix the red-black tree that will only happen if x is black
+        // x is the node that came to replace the deleted node and may carry the double black property
+        while (x != root && x->color == BLACK) {
+
+            // case A: x is a left child
+            if (x == x->parent->left) {
+                // w is x's sibling
+                Node* w = x->parent->right;
+
+                // case 1: w is red
+                if (w->color == RED) {
+                    // recolor w to black and parent to red then left rotate on parent and update w
+                    w->color = BLACK;
+                    x->parent->color = RED;
+                    leftRotate(x->parent);
+                    w = x->parent->right;
+                }
+
+                // case 2 and 3: w is black
+                if (w->left->color == BLACK && w->right->color == BLACK) {
+                    // case 2: both of w's children are black
+                    // recolor w to red and move x up the tree to check for further violations
+                    w->color = RED;
+                    x = x->parent;
+                }
+                // case 3: at least one of w's children is red
+                else {
+                    // case 3a: w's right child is black
+                    if (w->right->color == BLACK) {
+                        // recolor w's left child to black and w to red then right rotate on w and update w
+                        w->left->color = BLACK;
+                        w->color = RED;
+                        rightRotate(w);
+                        w = x->parent->right;
+                    }
+                    // case 3b: w's right child is red
+                    // recolor w to parent's color and parent to black and w's right child to black
+                    w->color = x->parent->color;
+                    x->parent->color = BLACK;
+                    w->right->color = BLACK;
+                    leftRotate(x->parent);
+                    x = root;
+                }
+            }
+            // case B: x is a right child
+            else {
+                Node* w = x->parent->left;
+
+                // case 1: w is red
+                if (w->color == RED) {
+                    // recolor w to black and parent to red then right rotate on parent and update w
+                    w->color = BLACK;
+                    x->parent->color = RED;
+                    rightRotate(x->parent);
+                    w = x->parent->left;
+                }
+
+                // case 2 and 3: w is black
+                if (w->right->color == BLACK && w->left->color == BLACK) {
+                    // case 2: both of w's children are black
+                    // recolor w to red and move x up the tree to check for further violations
+                    w->color = RED;
+                    x = x->parent;
+                }
+                // case 3: at least one of w's children is red
+                else {
+                    // case 3a: w's left child is black
+                    // recolor w's right child to black and w to red then left rotate on w and update w
+                    if (w->left->color == BLACK) {
+                        w->right->color = BLACK;
+                        w->color = RED;
+                        leftRotate(w);
+                        w = x->parent->left;
+                    }
+                    // case 3b: w's left child is red
+                    // recolor w to parent's color and parent to black and w's left child to black
+                    w->color = x->parent->color;
+                    x->parent->color = BLACK;
+                    w->left->color = BLACK;
+                    rightRotate(x->parent);
+                    x = root;
+                }
+            }
+        }
+        // to remove double black property from x
+        x->color = BLACK;
+    }
+
+    // search node by itemID
+    Node* searchByID(Node* x, int itemID) {
+        // base case
+        if (x == NIL) return NIL;
+        if (x->itemID == itemID) return x;
+
+        // search in left subtree
+        Node* left = searchByID(x->left, itemID);
+        if (left != NIL) return left;
+
+        // search in right subtree
+        return searchByID(x->right, itemID);
+    }
+
+    // helper function to delete all nodes (used in destructor)
+    void deleteAll(Node* x) {
+        if (x != NIL) {
+            deleteAll(x->left);
+            deleteAll(x->right);
+            delete x;
+        }
+    }
 
 public:
+    // Constructor and Destructor
     ConcreteAuctionTree() {
-        // TODO: Initialize your Red-Black Tree
+        NIL = new Node();
+        NIL->color = BLACK;
+        NIL->left = NIL->right = NIL->parent = NIL;
+        root = NIL;
     }
 
+    ~ConcreteAuctionTree() {
+        deleteAll(root);
+        delete NIL;
+    }
+
+    // insert item
     void insertItem(int itemID, int price) override {
-        // TODO: Implement Red-Black Tree insertion
-        // Remember to maintain RB-Tree properties with rotations and recoloring
+        Node* z = createNode(itemID, price);
+        Node* y = NIL;
+        Node* x = root;
+
+        while (x != NIL) {
+            // find the correct position to insert
+            y = x;
+            if (price < x->price)
+                x = x->left;
+            else if (price > x->price)
+                x = x->right;
+            else if (itemID < x->itemID)
+                x = x->left;
+            else
+                x = x->right;
+        }
+
+        // insert z
+        z->parent = y;
+
+        if (y == NIL)
+            root = z;
+        else if (price < y->price)
+            y->left = z;
+        else if (price > y->price)
+            y->right = z;
+        else if (itemID < y->itemID)
+            y->left = z;
+        else
+            y->right = z;
+
+        insertFix(z);
     }
 
+    // delete item
     void deleteItem(int itemID) override {
-        // TODO: Implement Red-Black Tree deletion
-        // This is complex - handle all cases carefully
+        Node* z = searchByID(root, itemID);
+        if (z == NIL) return;
+
+        Node* y = z;
+        Node* x;
+        Color yOriginalColor = y->color;
+
+        if (z->left == NIL) {
+            x = z->right;
+            transplant(z, z->right);
+        }
+        else if (z->right == NIL) {
+            x = z->left;
+            transplant(z, z->left);
+        }
+        else {
+            y = minimum(z->right);
+            yOriginalColor = y->color;
+            x = y->right;
+
+            if (y->parent == z)
+                x->parent = y;
+            else {
+                transplant(y, y->right);
+                y->right = z->right;
+                y->right->parent = y;
+            }
+
+            transplant(z, y);
+            y->left = z->left;
+            y->left->parent = y;
+            y->color = z->color;
+        }
+
+        delete z;
+        if (yOriginalColor == BLACK)
+            deleteFix(x);
     }
+
+//    // for testing
+//    void inorderPrint(Node* x) {
+//        if (x == NIL) return;
+//        inorderPrint(x->left);
+//        cout << "(" << x->itemID << "," << x->price
+//             << "," << (x->color == RED ? "R" : "B") << ") ";
+//        inorderPrint(x->right);
+//    }
+
+//    void debugPrintAll() {
+//        inorderPrint(root);
+//        cout << endl;
+//    }
+
+    void printTree(Node* node, string indent, bool last) {
+        if (node == NIL) return;
+
+        cout << indent;
+        if (last) {
+            cout << "R----";
+            indent += "     ";
+        } else {
+            cout << "L----";
+            indent += "|    ";
+        }
+
+        cout << "(" << node->itemID << ","
+             << node->price << ","
+             << (node->color == RED ? "R" : "B") << ")\n";
+
+        printTree(node->left, indent, false);
+        printTree(node->right, indent, true);
+    }
+
+    void visualize() {
+        if (root == NIL) {
+            cout << "[empty tree]\n";
+            return;
+        }
+        printTree(root, "", true);
+    }
+
 };
 
 // =========================================================
@@ -364,12 +756,12 @@ int main(){
     //goz2 Essam
 //    vector<int> v = {1,2,3,4,7};
 //    InventorySystem::optimizeLootSplit(v.size(),v);
-    vector<vector<int>> graph= {{0,1,1},{1,2,2}};
-    vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
-    vector<vector<int>> graph3= {{0,1,4}};
-    cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
-    cout << WorldNavigator::sumMinDistancesBinary(2,graph3) << endl;
-    cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
+//    vector<vector<int>> graph= {{0,1,1},{1,2,2}};
+//    vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
+//    vector<vector<int>> graph3= {{0,1,4}};
+//    cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
+//    cout << WorldNavigator::sumMinDistancesBinary(2,graph3) << endl;
+//    cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
 
     //----------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------
@@ -403,5 +795,37 @@ int main(){
 //    cost = WorldNavigator::minBribeCost(3, 3, 2, 3, roads3);
 //    cout << "MST cost (Example 3): " << cost << endl; //expected: 8 + 7 = 15
 
+
+//   //----------------------------------------------------------------------------------
+    //goz2 Youki
+    AuctionTree* tree = new ConcreteAuctionTree();
+
+    cout << "===== INSERTIONS =====\n";
+    tree->insertItem(10, 50);
+    tree->insertItem(20, 40);
+    tree->insertItem(30, 60);
+    tree->insertItem(15, 40);
+    tree->insertItem(25, 55);
+    tree->insertItem(5, 50);
+
+    cout << "\nTree after inserts:\n";
+    ((ConcreteAuctionTree*)tree)->visualize();
+
+    cout << "\n===== DELETE itemID 20 =====\n";
+    tree->deleteItem(20);
+    ((ConcreteAuctionTree*)tree)->visualize();
+
+    cout << "\n===== DELETE itemID 10 =====\n";
+    tree->deleteItem(10);
+    ((ConcreteAuctionTree*)tree)->visualize();
+
+    cout << "\n===== DELETE itemID 30 =====\n";
+    tree->deleteItem(30);
+    ((ConcreteAuctionTree*)tree)->visualize();
+
+    cout << "\n===== FINAL TREE =====\n";
+    ((ConcreteAuctionTree*)tree)->visualize();
+
+    delete tree;
     return 0;
 }
