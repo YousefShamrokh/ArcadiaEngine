@@ -27,19 +27,85 @@ private:
     // TODO: Define your data structures here
     // Hint: You'll need a hash table with double hashing collision resolution
 
+    const static int primeNumber = 307;
+    const static int tableSize = 101;
+
+    struct Player {
+        int playerId;
+        string playerName;
+        bool occupied;
+
+        Player() : playerId(-1), playerName(""), occupied(false) {}
+    };
+
+    Player table[tableSize];
+
+    int h1(int key) {
+        //calculate the first hash
+        const double A = 0.26072006111;//golden ratio
+        double keyA = key * A; // multiply key with the golden ratio
+        double mod = keyA - floor(keyA); //modulus 1 is the fraction part of the number so we can subtract the number by its floor
+        return (int)floor(tableSize * mod);//  floor(n( kA mod 1 ))
+    }
+
+    int h2(int key) {
+        //caluculate the second hash using the prime number for double hashing
+        return primeNumber - (key % primeNumber);
+    }
+
 public:
     ConcretePlayerTable() {
         // TODO: Initialize your hash table
+        for (int i = 0; i < tableSize; i++) {
+            //setting the table with by making the occupied boolean false
+            table[i].occupied = false;
+        }
     }
 
     void insert(int playerID, string name) override {
         // TODO: Implement double hashing insert
         // Remember to handle collisions using h1(key) + i * h2(key)
+        int hash1 = h1(playerID);
+        int hash2 = h2(playerID);
+
+        for (int i = 0; i < tableSize; i++) {
+            //hashing id
+            int id = (hash1 + (i * hash2)) % tableSize;
+
+            //checking if that id is already there
+            if (table[id].occupied && table[id].playerId == playerID) {
+                cout << "Player already exists\n";
+                return;
+            }
+
+            //if the place isn't occupied then enter the player in the hash table
+            if (!table[id].occupied) {
+                table[id].playerId = playerID;
+                table[id].playerName = name;
+                table[id].occupied = true;
+                return;
+            }
+        }
+
+        //if there is no place in the hash table show that the table is full
+        cout<<"Table is full";
     }
 
     string search(int playerID) override {
         // TODO: Implement double hashing search
         // Return "" if player not found
+        int hash1 = h1(playerID);
+        int hash2 = h2(playerID);
+
+        for (int i = 0; i < tableSize; i++) {
+            int id = (hash1 + (i * hash2)) % tableSize;
+            if (table[id].occupied && table[id].playerId == playerID) {
+                return table[id].playerName;
+            }
+            if (!table[id].occupied) {
+                return "";
+            }
+        }
         return "";
     }
 };
@@ -858,5 +924,36 @@ int main(){
     // }
     //===================================================================================
     // goz2 aboda
+    //
+    // ConcretePlayerTable roster;
+    //
+    // cout << "--- Test 1: Basic Insertion ---" << endl;
+    // roster.insert(1001, "Alice");
+    // roster.insert(2002, "Bob");
+    // roster.insert(3003, "Charlie");
+    // cout << "Inserted Alice, Bob, and Charlie." << endl;
+    //
+    // cout << "\n--- Test 2: Searching ---" << endl;
+    // string s1 = roster.search(1001);
+    // string s2 = roster.search(3003); // Non-existent
+    //
+    // cout << "Search 1001 (Should be Alice): " << (s1 == "" ? "Not Found" : s1) << endl;
+    // cout << "Search 9999 (Should be Empty): " << (s2 == "" ? "Not Found" : s2) << endl;
+    //
+    // cout << "\n--- Test 3: Filling the Table ---" << endl;
+    // // We already inserted 3. Let's fill the remaining 98 spots.
+    // // Table size is 101.
+    // for (int i = 0; i < 97; i++) {
+    //     // Just generating unique IDs
+    //     roster.insert(i + 5000, "FillerPlayer");
+    // }
+    // cout << "Filled the remaining 98 slots." << endl;
+    //
+    // cout << "\n--- Test 4: Insert into Full Table ---" << endl;
+    // // The table should now have 101 items. This next insert should fail.
+    // cout << "Attempting to insert one more player:" << endl;
+    // roster.insert(8888, "OverflowPlayer");
+    // roster.insert(8888, "OverflowPlayer");
+    // roster.insert(88218, "OverflowPlayer");
     return 0;
 }
