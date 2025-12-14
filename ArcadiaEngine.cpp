@@ -529,6 +529,30 @@ long long InventorySystem::countStringPossibilities(string s) {
     // Rules: "uu" can be decoded as "w" or "uu"
     //        "nn" can be decoded as "m" or "nn"
     // Count total possible decodings
+    const long long mod = 1e9 + 7;
+    int n = s.length();
+    // if string is empty
+    if (n==0) return 1;
+
+    // dp array to store the number of ways to decode up to index i
+    vector<long long> dp(n+1,0);
+    dp[0] = 1;
+
+    for(int i=1; i<=n ; i++){
+        dp[i] = dp[i-1]; // single character decoding
+
+        // check for double character decoding
+        if(i>1){
+            string pair = s.substr(i-2,2);
+            if(pair == "uu" || pair == "nn"){
+                // add the ways to decode up to i-2
+                dp[i] = (dp[i] + dp[i-2]) % mod;
+            }
+        }
+
+    }
+
+    return dp[n];
 }
 
 // =========================================================
@@ -798,34 +822,42 @@ int main(){
 
 //   //----------------------------------------------------------------------------------
     //goz2 Youki
-    AuctionTree* tree = new ConcreteAuctionTree();
+//    AuctionTree* tree = new ConcreteAuctionTree();
+//
+//    cout << "===== INSERTIONS =====\n";
+//    tree->insertItem(10, 50);
+//    tree->insertItem(20, 40);
+//    tree->insertItem(30, 60);
+//    tree->insertItem(15, 40);
+//    tree->insertItem(25, 55);
+//    tree->insertItem(5, 50);
+//
+//    cout << "\nTree after inserts:\n";
+//    ((ConcreteAuctionTree*)tree)->visualize();
+//
+//    cout << "\n===== DELETE itemID 20 =====\n";
+//    tree->deleteItem(20);
+//    ((ConcreteAuctionTree*)tree)->visualize();
+//
+//    cout << "\n===== DELETE itemID 10 =====\n";
+//    tree->deleteItem(10);
+//    ((ConcreteAuctionTree*)tree)->visualize();
+//
+//    cout << "\n===== DELETE itemID 30 =====\n";
+//    tree->deleteItem(30);
+//    ((ConcreteAuctionTree*)tree)->visualize();
+//
+//    cout << "\n===== FINAL TREE =====\n";
+//    ((ConcreteAuctionTree*)tree)->visualize();
 
-    cout << "===== INSERTIONS =====\n";
-    tree->insertItem(10, 50);
-    tree->insertItem(20, 40);
-    tree->insertItem(30, 60);
-    tree->insertItem(15, 40);
-    tree->insertItem(25, 55);
-    tree->insertItem(5, 50);
+//    delete tree;
+    InventorySystem system;
 
-    cout << "\nTree after inserts:\n";
-    ((ConcreteAuctionTree*)tree)->visualize();
+    vector<string> testStrings = {"uu", "uunn", "u", "nnuu", "uuuunn"};
 
-    cout << "\n===== DELETE itemID 20 =====\n";
-    tree->deleteItem(20);
-    ((ConcreteAuctionTree*)tree)->visualize();
-
-    cout << "\n===== DELETE itemID 10 =====\n";
-    tree->deleteItem(10);
-    ((ConcreteAuctionTree*)tree)->visualize();
-
-    cout << "\n===== DELETE itemID 30 =====\n";
-    tree->deleteItem(30);
-    ((ConcreteAuctionTree*)tree)->visualize();
-
-    cout << "\n===== FINAL TREE =====\n";
-    ((ConcreteAuctionTree*)tree)->visualize();
-
-    delete tree;
+    for (const string& testStr : testStrings) {
+        long long count = system.countStringPossibilities(testStr);
+        cout << "String: " << testStr << " => Possibilities: " << count << endl;
+    }
     return 0;
 }
