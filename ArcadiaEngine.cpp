@@ -848,13 +848,15 @@ int main(){
 //    ((ConcreteAuctionTree*)tree)->visualize();
 
 //    delete tree;
-    InventorySystem system;
-
-    vector<string> testStrings = {"uu", "uunn", "u", "nnuu", "uuuunn"};
-
-    for (const string& testStr : testStrings) {
-        long long count = system.countStringPossibilities(testStr);
-        cout << "String: " << testStr << " => Possibilities: " << count << endl;
-    }
+    // InventorySystem system;
+    //
+    // vector<string> testStrings = {"uu", "uunn", "u", "nnuu", "uuuunn"};
+    //
+    // for (const string& testStr : testStrings) {
+    //     long long count = system.countStringPossibilities(testStr);
+    //     cout << "String: " << testStr << " => Possibilities: " << count << endl;
+    // }
+    //===================================================================================
+    // goz2 aboda
     return 0;
 }
