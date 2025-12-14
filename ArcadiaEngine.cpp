@@ -494,28 +494,29 @@ int InventorySystem::optimizeLootSplit(int n, vector<int>& coins) {
     if (n==0) return 0; // base cases
     if (n==1) return coins[0]; // base cases
     if (n==2) return abs(coins[0]-coins[1]); // base cases
-    int totalCoins = 0; //
-    for (int i = 0; i < n; ++i) totalCoins+=coins[i];
-    int bestSplitNum = totalCoins / 2;
-    vector<bool> subsetArr(bestSplitNum+1,false); subsetArr[0] = true;
+    int totalCoins = 0;
+    for (int i = 0; i < n; ++i) totalCoins+=coins[i]; //getting total amount of coins
+    int bestSplitNum = totalCoins / 2; // getting optimal split or very close to it
+    vector<bool> subsetArr(bestSplitNum+1,false); subsetArr[0] = true; // boolean array representing values that can be summed up to using coins in subset
     for (int i = 0; i < n; ++i) {
-        for (int j = bestSplitNum; j >= coins[i]; --j) {
-            if (subsetArr[j - coins[i]] == true) subsetArr[j] = true;
+        for (int j = bestSplitNum; j >= coins[i]; --j) { //update reachable sums by including the current coin
+            if (subsetArr[j - coins[i]] == true) subsetArr[j] = true; // checks if this number can be reached with coins < bestSplitNum
         }
     }
     int closestSum = 0;
-    for (int i = bestSplitNum; i >= 0; --i) {
+    for (int i = bestSplitNum; i >= 0; --i) { // iterating backwards to get largest subset number in bool array
         if (subsetArr[i]) {
             closestSum = i;
             break;
         }
     }
-    int difference = totalCoins - 2 * closestSum;
+    int difference = abs(closestSum - (totalCoins-closestSum)); // getting difference between 2 subsets
     return difference;
     // TODO: Implement partition problem using DP
     // Goal: Minimize |closestSum(subset1) - closestSum(subset2)|
     // Hint: Use subset closestSum DP to find closest closestSum to totalCoins/2
 }
+
 
 int InventorySystem::maximizeCarryValue(int capacity, vector<pair<int, int>>& items) {
     // TODO: Implement 0/1 Knapsack using DP
@@ -750,14 +751,14 @@ AuctionTree* createAuctionTree() {
 
 int main(){
     //goz2 Essam
-    vector<int> v = {1,2,3,4,7};
-    InventorySystem::optimizeLootSplit(v.size(),v);
-    vector<vector<int>> graph= {{0,1,1},{1,2,2}};
-    vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
-    vector<vector<int>> graph3= {{0,1,4}};
-    cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
-    cout << WorldNavigator::sumMinDistancesBinary(2,graph3) << endl;
-    cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
+//    vector<int> v = {1,2,3,4,7};
+//    InventorySystem::optimizeLootSplit(v.size(),v);
+//    vector<vector<int>> graph= {{0,1,1},{1,2,2}};
+//    vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
+//    vector<vector<int>> graph3= {{0,1,4}};
+//    cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
+//    cout << WorldNavigator::sumMinDistancesBinary(2,graph3) << endl;
+//    cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
 
     //----------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------
