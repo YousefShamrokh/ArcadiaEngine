@@ -575,6 +575,51 @@ void ConcreteLeaderboard::removePlayer(int player_id) {
     }
 }
 
+<<<<<<< HEAD
+=======
+int main(){
+    //goz2 Essam
+    vector<int> v = {3,4,8};
+   cout << InventorySystem::optimizeLootSplit(v.size(),v);
+//    vector<vector<int>> graph= {{0,1,1},{1,2,2}};
+//    vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
+//    vector<vector<int>> graph3= {{0,1,4}};
+//    cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
+//    cout << WorldNavigator::sumMinDistancesBinary(2,graph3) << endl;
+//    cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
+
+    //----------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------
+    //goz2 seif :D
+    //TESTING PATH EXISTS
+//    vector<vector<int>> graph3= {{0,1},{0,2}, {3,4}};
+//    cout << WorldNavigator::pathExists(5, graph3, 0, 4  ) << endl; // 1--->4 should return false
+//    cout << WorldNavigator::pathExists(5, graph3, 1, 2  ) << endl; // 1--->2 should return true
+//
+//    //TESTING MIN BRIBE COST
+//    //example 1: connected graph
+//    //roadData: {u, v, goldCost, silverCost}
+//    vector<vector<int>> roads = {{0,1,10,0},{1,2,5,0},{0,2,20,0}};
+//
+//    long long cost = WorldNavigator::minBribeCost(3, 3, 1, 1, roads);
+//    cout << "MST cost (Example 1): " << cost << endl; //expected: 15
+//
+//    //example 2: disconnected graph
+//    vector<vector<int>> roads2 = {{0,1,5,0},{2,3,7,0}};
+//
+//    cost = WorldNavigator::minBribeCost(4, 2, 1, 1, roads2);
+//    cout << "MST cost (Example 2): " << cost << endl; //expected: -1 (disconnected)
+//
+//    //example 3: graph with both gold and silver costs
+//    vector<vector<int>> roads3 = {
+//        {0,1,1,2}, // cost = 1*2 + 2*3 = 2 + 6 = 8
+//        {1,2,2,1}, // cost = 2*2 + 1*3 = 4 + 3 = 7
+//        {0,2,3,1}  // cost = 3*2 + 1*3 = 6 + 3 = 9
+//    };
+//
+//    cost = WorldNavigator::minBribeCost(3, 3, 2, 3, roads3);
+//    cout << "MST cost (Example 3): " << cost << endl; //expected: 8 + 7 = 15
+>>>>>>> ae3ffb173a75c495a441b2d609235eee94bd981e
 
 
 vector<int> ConcreteLeaderboard::getTopN(int n) {
