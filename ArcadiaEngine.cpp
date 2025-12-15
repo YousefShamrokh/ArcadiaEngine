@@ -841,8 +841,8 @@ AuctionTree* createAuctionTree() {
 
 int main(){
     //goz2 Essam
-//    vector<int> v = {1,2,3,4,7};
-//    InventorySystem::optimizeLootSplit(v.size(),v);
+    vector<int> v = {3,4,8};
+   cout << InventorySystem::optimizeLootSplit(v.size(),v);
 //    vector<vector<int>> graph= {{0,1,1},{1,2,2}};
 //    vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
 //    vector<vector<int>> graph3= {{0,1,4}};
