@@ -88,7 +88,7 @@ public:
         }
 
         //if there is no place in the hash table show that the table is full
-        cout<<"Table is full";
+        cout<<"Error: Table is full";
     }
 
     string search(int playerID) override {
@@ -98,10 +98,13 @@ public:
         int hash2 = h2(playerID);
 
         for (int i = 0; i < tableSize; i++) {
+            //hasing id
             int id = (hash1 + (i * hash2)) % tableSize;
+            //looking for player in the hash table
             if (table[id].occupied && table[id].playerId == playerID) {
                 return table[id].playerName;
             }
+            //to save time if the first hash is not occupied that means that the player is not in the hash table
             if (!table[id].occupied) {
                 return "";
             }
@@ -818,7 +821,40 @@ int ServerKernel::minIntervals(vector<char>& tasks, int n) {
     // Same task must wait 'n' intervals before running again
     // Return minimum total intervals needed (including idle time)
     // Hint: Use greedy approach with frequency counting
-    return 0;
+
+    //handle if there is no tasks in the vector to return 0
+    if (tasks.empty()) return 0;
+
+    //initializing array to store the frequency of tasks
+    //size is 26 since the input is going to be from 'A' to 'Z'
+    int freq[26] = {0};
+
+    //loop to go through the vector to fill up the frequency array
+    for (char task : tasks) {
+        freq[task - 'A']++;
+    }
+
+    //we loop through the frequency array to find what is the highest frequency of all the tasks
+    int maxFreq = 0;
+    for (int count : freq) {
+        maxFreq = max(maxFreq, count);
+    }
+
+    //sometimes more than one task have that same maximum frequency so we use this array to
+    //go through the frequency array count how many tasks share the same maximum frequency
+    int countMaxFreq = 0;
+    for (int count : freq) {
+        if (count == maxFreq) {
+            countMaxFreq++;
+        }
+    }
+
+    //first we will place the most frequent tasks first and these will have maxreq-1 gaps between them
+    //and each gap must take n+1 time (the cooldown + the task)
+    //then at last we will put all the tasks with the max frequency (countmaxfreq)
+    int calculatedIntervals = (maxFreq - 1) * (n + 1) + countMaxFreq;
+
+    return max(calculatedIntervals, (int)tasks.size());
 }
 
 // =========================================================
@@ -885,43 +921,43 @@ int main(){
 
 //   //----------------------------------------------------------------------------------
     //goz2 Youki
-//    AuctionTree* tree = new ConcreteAuctionTree();
-//
-//    cout << "===== INSERTIONS =====\n";
-//    tree->insertItem(10, 50);
-//    tree->insertItem(20, 40);
-//    tree->insertItem(30, 60);
-//    tree->insertItem(15, 40);
-//    tree->insertItem(25, 55);
-//    tree->insertItem(5, 50);
-//
-//    cout << "\nTree after inserts:\n";
-//    ((ConcreteAuctionTree*)tree)->visualize();
-//
-//    cout << "\n===== DELETE itemID 20 =====\n";
-//    tree->deleteItem(20);
-//    ((ConcreteAuctionTree*)tree)->visualize();
-//
-//    cout << "\n===== DELETE itemID 10 =====\n";
-//    tree->deleteItem(10);
-//    ((ConcreteAuctionTree*)tree)->visualize();
-//
-//    cout << "\n===== DELETE itemID 30 =====\n";
-//    tree->deleteItem(30);
-//    ((ConcreteAuctionTree*)tree)->visualize();
-//
-//    cout << "\n===== FINAL TREE =====\n";
-//    ((ConcreteAuctionTree*)tree)->visualize();
-
-//    delete tree;
-    // InventorySystem system;
-    //
-    // vector<string> testStrings = {"uu", "uunn", "u", "nnuu", "uuuunn"};
-    //
-    // for (const string& testStr : testStrings) {
-    //     long long count = system.countStringPossibilities(testStr);
-    //     cout << "String: " << testStr << " => Possibilities: " << count << endl;
-    // }
+   //  AuctionTree* tree = new ConcreteAuctionTree();
+   //
+   // cout << "===== INSERTIONS =====\n";
+   // tree->insertItem(10, 50);
+   // tree->insertItem(20, 40);
+   // tree->insertItem(30, 60);
+   // tree->insertItem(15, 40);
+   // tree->insertItem(25, 55);
+   // tree->insertItem(5, 50);
+   //
+   // cout << "\nTree after inserts:\n";
+   // ((ConcreteAuctionTree*)tree)->visualize();
+   //
+   // cout << "\n===== DELETE itemID 20 =====\n";
+   // tree->deleteItem(20);
+   // ((ConcreteAuctionTree*)tree)->visualize();
+   //
+   // cout << "\n===== DELETE itemID 10 =====\n";
+   // tree->deleteItem(10);
+   // ((ConcreteAuctionTree*)tree)->visualize();
+   //
+   // cout << "\n===== DELETE itemID 30 =====\n";
+   // tree->deleteItem(30);
+   // ((ConcreteAuctionTree*)tree)->visualize();
+   //
+   // cout << "\n===== FINAL TREE =====\n";
+   // ((ConcreteAuctionTree*)tree)->visualize();
+   //
+   // delete tree;
+   //  InventorySystem system;
+   //
+   //  vector<string> testStrings = {"uu", "uunn", "u", "nnuu", "uuuunn"};
+   //
+   //  for (const string& testStr : testStrings) {
+   //      long long count = system.countStringPossibilities(testStr);
+   //      cout << "String: " << testStr << " => Possibilities: " << count << endl;
+   //  }
     //===================================================================================
     // goz2 aboda
     //
@@ -955,5 +991,19 @@ int main(){
     // roster.insert(8888, "OverflowPlayer");
     // roster.insert(8888, "OverflowPlayer");
     // roster.insert(88218, "OverflowPlayer");
+    // ServerKernel kernel;
+    //
+    // vector<char> tasks1 = {'A','A','A','B','B','B'};
+    // cout << "Test 1 Output: " << kernel.minIntervals(tasks1, 3) << "\n";
+
+    // vector<char> tasks2 = {'A', 'A', 'A'};
+    // cout << "Test 2 Output: " << kernel.minIntervals(tasks2, 2) << " (Expected: 7)\n";
+    //
+    // vector<char> tasks3 = {'A', 'B', 'C'};
+    // cout << "Test 3 Output: " << kernel.minIntervals(tasks3, 2) << " (Expected: 3)\n";
+    //
+    // vector<char> tasks4 = {'A', 'A', 'A', 'B', 'B', 'B'};
+    // cout << "Test 4 Output: " << kernel.minIntervals(tasks4, 2) << " (Expected: 8)\n";
+
     return 0;
 }
