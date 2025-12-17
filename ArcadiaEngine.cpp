@@ -119,24 +119,132 @@ class ConcreteLeaderboard : public Leaderboard {
 private:
     // TODO: Define your skip list node structure and necessary variables
     // Hint: You'll need nodes with multiple forward pointers
+class SkipListNode {
+public:
+    int player_id;
+    int score;
+    vector<SkipListNode*> forward;
+
+    SkipListNode(int id, int s, int level)
+        : player_id(id), score(s), forward(level + 1, nullptr) {}
+};
+
+    int max_level;
+    int level;
+    SkipListNode* header;
+
+int random_level() {
+    int l = 0;
+    while ((rand() % 2) == 0 && l < max_level) {
+        ++l;
+    }
+    return l;
+}
 
 public:
-    ConcreteLeaderboard() {
-        // TODO: Initialize your skip list
-    }
 
-    void addScore(int playerID, int score) override {
+
+        ConcreteLeaderboard(int max_lvl=16)
+    : max_level(max_lvl), level(0) {
+        // TODO: Initialize your skip list
+    header = new SkipListNode(-1, -1, max_level);
+}
+~ConcreteLeaderboard() {
+    SkipListNode* current = header;
+    while (current) {
+        SkipListNode* next = current->forward[0];
+        delete current;
+        current = next;
+    }
+}
+
+    void addScore(int player_id , int score) override {
         // TODO: Implement skip list insertion
         // Remember to maintain descending order by score
+           vector<SkipListNode*> update(max_level + 1);
+        SkipListNode* current = header;
+
+
+        for (int i = level; i >= 0; i--) {
+            while (current->forward[i] != nullptr &&
+                   (current->forward[i]->score > score ||
+                    (current->forward[i]->score == score &&
+                     current->forward[i]->player_id < player_id))) {
+                current = current->forward[i];
+            }
+            update[i] = current;
+        }
+          int new_level = random_level();
+        if (new_level > level) {
+            for (int i = level + 1; i <= new_level; i++) {
+                update[i] = header;
+            }
+            level = new_level;
+        }
+
+        SkipListNode* new_node = new SkipListNode(player_id, score, new_level);
+        for (int i = 0; i <= new_level; i++) {
+            new_node->forward[i] = update[i]->forward[i];
+            update[i]->forward[i] = new_node;
+        }
+
     }
 
     void removePlayer(int playerID) override {
         // TODO: Implement skip list deletion
+
+    vector<SkipListNode*> update(max_level + 1, nullptr);
+    SkipListNode* current = header;
+
+
+    while (current->forward[0] && current->forward[0]->player_id != playerID) {
+        current = current->forward[0];
     }
+
+    SkipListNode* target = current->forward[0];
+    if (!target || target->player_id != playerID) return;
+
+
+    for (int i = 0; i <= level; i++) {
+        SkipListNode* temp = header;
+        while (temp->forward[i] && temp->forward[i] != target) {
+            temp = temp->forward[i];
+        }
+        update[i] = temp;
+    }
+
+
+    for (int i = 0; i <= level; i++) {
+        if (update[i]->forward[i] == target) {
+            update[i]->forward[i] = target->forward[i];
+        }
+    }
+
+    delete target;
+
+
+    while (level > 0 && header->forward[level] == nullptr) {
+        level--;
+    }
+}
+
+
 
     vector<int> getTopN(int n) override {
         // TODO: Return top N player IDs in descending score order
-        return {};
+       vector<int> result(n);
+        SkipListNode* current = header->forward[0];
+        int count = 0;
+
+        while (current != nullptr && count < n) {
+                result[count++]=current->player_id;
+
+            current = current->forward[0];
+
+        }
+
+
+        return result;
     }
 };
 
@@ -584,6 +692,7 @@ int InventorySystem::optimizeLootSplit(int n, vector<int>& coins) {
     // TODO: Implement partition problem using DP
     // Goal: Minimize |closestSum(subset1) - closestSum(subset2)|
     // Hint: Use subset closestSum DP to find closest closestSum to totalCoins/2
+    
 }
 
 
@@ -591,6 +700,24 @@ int InventorySystem::maximizeCarryValue(int capacity, vector<pair<int, int>>& it
     // TODO: Implement 0/1 Knapsack using DP
     // items = {weight, value} pairs
     // Return maximum value achievable within capacity
+         if (items.empty() || capacity <= 0) return 0;
+
+    int n = items.size();
+    vector<vector<int>> dp(n + 1, vector<int>(capacity + 1, 0));
+
+    for (int i = 1; i <= n; i++) {
+        int weight = items[i - 1].first;
+        int value = items[i - 1].second;
+
+        for (int w = 0; w <= capacity; w++) {
+            dp[i][w] = dp[i - 1][w];
+            if (w >= weight) {
+                dp[i][w] = max(dp[i][w], dp[i - 1][w - weight] + value);
+            }
+        }
+    }
+
+    return dp[n][capacity];
     return 0;
 }
 
@@ -866,8 +993,8 @@ PlayerTable* createPlayerTable() {
     return new ConcretePlayerTable();
 }
 
-Leaderboard* createLeaderboard() {
-    return new ConcreteLeaderboard();
+Leaderboard* createLeaderboard(int max_lvl = 16) {
+    return new ConcreteLeaderboard(max_lvl);
 }
 
 AuctionTree* createAuctionTree() {
@@ -1004,6 +1131,107 @@ int main(){
     //
     // vector<char> tasks4 = {'A', 'A', 'A', 'B', 'B', 'B'};
     // cout << "Test 4 Output: " << kernel.minIntervals(tasks4, 2) << " (Expected: 8)\n";
+//---------------------------------------------
+// Create leaderboard using base class pointer
+
+        Leaderboard* leaderboard = createLeaderboard(16);
+
+    // Test 1: Add players
+    cout << "--- Test 1: Adding Players ---" << endl;
+    leaderboard->addScore(101, 1500);
+    leaderboard->addScore(102, 2000);
+    leaderboard->addScore(103, 1800);
+    leaderboard->addScore(104, 2200);
+    leaderboard->addScore(105, 1600);
+    cout << "Added 5 players with scores" << endl;
+
+    // Test 2: Get top 3 players
+    cout << "\n--- Test 2: Top 3 Players ---" << endl;
+    vector<int> top3 = leaderboard->getTopN(3);
+    cout << "Top 3 players:" << endl;
+    for (int id : top3) {
+        cout << "Player ID: " << id << endl;
+    }
+
+    // Test 3: Remove a player
+    cout << "\n--- Test 3: Remove Player 103 ---" << endl;
+    leaderboard->removePlayer(103);
+    cout << "Player 103 removed" << endl;
+
+    // Test 4: Get top 5 after removal
+    cout << "\n--- Test 4: Top 4 After Removal ---" << endl;
+    vector<int> top4 = leaderboard->getTopN(4);
+    cout << "Top 4 players after removal:" << endl;
+    for (int id : top4) {
+        cout << "Player ID: " << id << endl;
+    }
+
+    // Test 5: Add new player with high score
+    cout << "\n--- Test 5: Add Player 106 with Score 2100 ---" << endl;
+    leaderboard->addScore(106, 2100);
+    cout << "Player 106 added" << endl;
+
+    // Test 6: Get top 5 after adding
+    cout << "\n--- Test 6: Top 4 After Adding Player 106 ---" << endl;
+    top4 = leaderboard->getTopN(4);
+    cout << "Top 4 players:" << endl;
+    for (int id : top4) {
+        cout << "Player ID: " << id << endl;
+    }
+
+    // Clean up
+    delete leaderboard;
+
+    // Test Inventory System
+    cout << "\n\n=== INVENTORY SYSTEM TEST ===" << endl;
+
+    // Test Case 1: Standard knapsack
+    cout << "\n--- Test Case 1 ---" << endl;
+    vector<pair<int, int>> items1 = {
+        {2, 3},   // weight: 2, value: 3
+        {3, 4},   // weight: 3, value: 4
+        {4, 5},   // weight: 4, value: 5
+        {5, 6}    // weight: 5, value: 6
+    };
+    int capacity1 = 5;
+    int maxValue1 = InventorySystem::maximizeCarryValue(capacity1, items1);
+    cout << "Capacity: " << capacity1 << endl;
+    cout << "Items: (w:2,v:3), (w:3,v:4), (w:4,v:5), (w:5,v:6)" << endl;
+    cout << "Maximum value: " << maxValue1 << endl;
+
+    // Test Case 2: Items too heavy
+    cout << "\n--- Test Case 2 ---" << endl;
+    vector<pair<int, int>> items2 = {
+        {10, 100},
+        {20, 200}
+    };
+    int capacity2 = 5;
+    int maxValue2 = InventorySystem::maximizeCarryValue(capacity2, items2);
+    cout << "Capacity: " << capacity2 << endl;
+    cout << "Items: (w:10,v:100), (w:20,v:200)" << endl;
+    cout << "Maximum value: " << maxValue2 << endl;
+
+    // Test Case 3: Multiple items fit
+    cout << "\n--- Test Case 3 ---" << endl;
+    vector<pair<int, int>> items3 = {
+        {1, 10},
+        {2, 20},
+        {3, 30}
+    };
+    int capacity3 = 10;
+    int maxValue3 = InventorySystem::maximizeCarryValue(capacity3, items3);
+    cout << "Capacity: " << capacity3 << endl;
+    cout << "Items: (w:1,v:10), (w:2,v:20), (w:3,v:30)" << endl;
+    cout << "Maximum value: " << maxValue3 << endl;
+
+    // Test Case 4: Empty inventory
+    cout << "\n--- Test Case 4 ---" << endl;
+    vector<pair<int, int>> items4 = {};
+    int capacity4 = 10;
+    int maxValue4 = InventorySystem::maximizeCarryValue(capacity4, items4);
+    cout << "Capacity: " << capacity4 << endl;
+    cout << "Items: (empty)" << endl;
+    cout << "Maximum value: " << maxValue4 << endl;
 
     return 0;
 }
