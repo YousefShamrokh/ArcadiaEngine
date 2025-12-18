@@ -203,8 +203,8 @@ int main() {
     test_PartB_Inventory();
     test_PartC_Navigator();
     test_PartD_Kernel();
-
     runner.printSummary();
+
 
     return 0;
 }
