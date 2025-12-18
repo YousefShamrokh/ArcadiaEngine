@@ -668,6 +668,9 @@ public:
 // =========================================================
 
 int InventorySystem::optimizeLootSplit(int n, vector<int>& coins) {
+    // TODO: Implement partition problem using DP
+    // Goal: Minimize |closestSum(subset1) - closestSum(subset2)|
+    // Hint: Use subset closestSum DP to find closest closestSum to totalCoins/2
     if (n==0) return 0; // base cases
     if (n==1) return coins[0]; // base cases
     if (n==2) return abs(coins[0]-coins[1]); // base cases
@@ -681,7 +684,7 @@ int InventorySystem::optimizeLootSplit(int n, vector<int>& coins) {
         }
     }
     int closestSum = 0;
-    for (int i = bestSplitNum; i >= 0; --i) { // iterating backwards to get largest subset number in bool array
+    for (int i = bestSplitNum; i >= 0; --i) { // iterating backwards to get the largest subset number in bool array
         if (subsetArr[i]) {
             closestSum = i;
             break;
@@ -689,10 +692,6 @@ int InventorySystem::optimizeLootSplit(int n, vector<int>& coins) {
     }
     int difference = abs(closestSum - (totalCoins-closestSum)); // getting difference between 2 subsets
     return difference;
-    // TODO: Implement partition problem using DP
-    // Goal: Minimize |closestSum(subset1) - closestSum(subset2)|
-    // Hint: Use subset closestSum DP to find closest closestSum to totalCoins/2
-    
 }
 
 
@@ -890,7 +889,11 @@ long long WorldNavigator::minBribeCost(int n, int m, long long goldRate, long lo
 
 
 string WorldNavigator::sumMinDistancesBinary(int n, vector<vector<int>>& roads) {
-    const long long INF = 9999999999999; //const large value representing infinity/unreachable nodes
+    // TODO: Implement All-Pairs Shortest Path (Floyd-Warshall)
+    // Sum all shortest distances between unique pairs (i < j)
+    // Return the sum as a binary string
+    // Hint: Handle large numbers carefully
+    const long long INF = 1e18; //const large value representing infinity/unreachable nodes
     vector<vector<long long>> distance(n, vector<long long>(n,INF)); // 2d array calculating shortest distances in graph
     for(int i = 0; i < n; ++i) {
         distance[i][i] = 0; // initializes diagonal points as 0
@@ -898,7 +901,6 @@ string WorldNavigator::sumMinDistancesBinary(int n, vector<vector<int>>& roads) 
     for(int i = 0; i < roads.size(); ++i) {
         if (roads[i][2]<distance[roads[i][0]][roads[i][1]]) { // adds edges from roads into distance 2d array
             distance[roads[i][0]][roads[i][1]] = roads[i][2];
-            //distance[roads[i][1]][roads[i][0]] = roads[i][2];
         }
     }
     for (int k = 0; k < n; ++k) { // performs Floyd Warshall algorithm
@@ -918,13 +920,6 @@ string WorldNavigator::sumMinDistancesBinary(int n, vector<vector<int>>& roads) 
             if (distance[i][j]!=INF) sum += distance[i][j];
         }
     }
-//    cout << sum << "\n";
-//    for (int i = 0; i < n; ++i) {
-//        for (int j = 0; j < n; ++j) {
-//            cout << to_string(distance[i][j]) + " ";
-//        }
-//        cout << endl;
-//    }
     string binaryConversion = "";
     if (sum == 0) return "0";
     while (sum>0){
@@ -933,10 +928,6 @@ string WorldNavigator::sumMinDistancesBinary(int n, vector<vector<int>>& roads) 
         sum/=2;
     }
     return binaryConversion;
-    // TODO: Implement All-Pairs Shortest Path (Floyd-Warshall)
-    // Sum all shortest distances between unique pairs (i < j)
-    // Return the sum as a binary string
-    // Hint: Handle large numbers carefully
 }
 
 // =========================================================
@@ -1005,7 +996,7 @@ AuctionTree* createAuctionTree() {
 int main(){
     //goz2 Essam
     vector<int> v = {3,4,8};
-   cout << InventorySystem::optimizeLootSplit(v.size(),v);
+//    cout << InventorySystem::optimizeLootSplit(v.size(),v) << endl;
 //    vector<vector<int>> graph= {{0,1,1},{1,2,2}};
 //    vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
 //    vector<vector<int>> graph3= {{0,1,4}};
