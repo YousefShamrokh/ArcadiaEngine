@@ -994,49 +994,50 @@ AuctionTree* createAuctionTree() {
 }
 }
 
+
 int main(){
 //goz2 Essam
 //                Test cases for optimizeLootSplit
-//     vector<int> coins = {3,4,8};
-//     cout << InventorySystem::optimizeLootSplit(3,coins) << endl;
-//     vector<int> coins1 = {};
-//     cout << InventorySystem::optimizeLootSplit(0, coins1)<< endl;
-//     vector<int> coins2 = {7};
-//     cout << InventorySystem::optimizeLootSplit(1, coins2) << endl;
-//     vector<int> coins3 = {3,8};
-//     cout << InventorySystem::optimizeLootSplit(2, coins3)<<endl;
-//     vector<int> coins4 = {1,5,11,5};
-//     cout << InventorySystem::optimizeLootSplit(4, coins4) <<endl;
-//     vector<int> coins5 = {1,2,7};
-//     cout << InventorySystem::optimizeLootSplit(3, coins5)<<endl;
-//     vector<int> coins6 = {8,6,5};
-//     cout << InventorySystem::optimizeLootSplit(3, coins6)<<endl;
-//     vector<int> coins7 = {1000,1,1,1,1};
-//     cout << InventorySystem::optimizeLootSplit(5, coins7) << endl;
-//     vector<int> coins8 = {100,100,100,100};
-//     cout << InventorySystem::optimizeLootSplit(4, coins8)<<endl;
+     vector<int> coins = {3,4,8};
+     cout << InventorySystem::optimizeLootSplit(3,coins) << endl;
+     vector<int> coins1 = {};
+     cout << InventorySystem::optimizeLootSplit(0, coins1)<< endl;
+     vector<int> coins2 = {7};
+     cout << InventorySystem::optimizeLootSplit(1, coins2) << endl;
+     vector<int> coins3 = {3,8};
+     cout << InventorySystem::optimizeLootSplit(2, coins3)<<endl;
+     vector<int> coins4 = {1,5,11,5};
+     cout << InventorySystem::optimizeLootSplit(4, coins4) <<endl;
+     vector<int> coins5 = {1,2,7};
+     cout << InventorySystem::optimizeLootSplit(3, coins5)<<endl;
+     vector<int> coins6 = {8,6,5};
+     cout << InventorySystem::optimizeLootSplit(3, coins6)<<endl;
+     vector<int> coins7 = {1000,1,1,1,1};
+     cout << InventorySystem::optimizeLootSplit(5, coins7) << endl;
+     vector<int> coins8 = {100,100,100,100};
+     cout << InventorySystem::optimizeLootSplit(4, coins8)<<endl;
 
 //              Test cases for sumMinDistancesBinary
-//      vector<vector<int>> graph= {{0,1,1},{1,2,2}};
-//      vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
-//      vector<vector<int>> graph3= {{0,1,4}};
-//      cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
-//      cout << WorldNavigator::sumMinDistancesBinary(2,graph3) << endl;
-//      cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
-//      vector<vector<int>> empty = {};
-//      cout << WorldNavigator::sumMinDistancesBinary(1,empty) << endl;
-//      vector<vector<int>> roads = {{0,1,5}};
-//      cout << WorldNavigator::sumMinDistancesBinary(2, roads) << endl;
-//      vector<vector<int>> roads2 = {{0,1,2},{1,2,3}};
-//      cout << WorldNavigator::sumMinDistancesBinary(3, roads2) << endl;
-//      vector<vector<int>> roads3 = {{0,1,10},{0,1,3}};
-//      cout << WorldNavigator::sumMinDistancesBinary(2, roads3) << endl;
-//      vector<vector<int>> roads4 = {{0,1,1},{1,2,2},{2,3,3}};
-//      cout << WorldNavigator::sumMinDistancesBinary(4, roads4) << endl;
-//      vector<vector<int>> roads5 = {{0,1,1000000000},{1,2,1000000000}};
-//      cout << WorldNavigator::sumMinDistancesBinary(3, roads5) << endl;
-//      vector<vector<int>> roads6 = {{0,1,800000000},{1,2,900000000},{0,2,500000000}};
-//      cout << WorldNavigator::sumMinDistancesBinary(3, roads6) << endl;
+      vector<vector<int>> graph= {{0,1,1},{1,2,2}};
+      vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
+      vector<vector<int>> graph3= {{0,1,4}};
+      cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
+      cout << WorldNavigator::sumMinDistancesBinary(2,graph3) << endl;
+      cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
+      vector<vector<int>> empty = {};
+      cout << WorldNavigator::sumMinDistancesBinary(1,empty) << endl;
+      vector<vector<int>> roads = {{0,1,5}};
+      cout << WorldNavigator::sumMinDistancesBinary(2, roads) << endl;
+      vector<vector<int>> roads2 = {{0,1,2},{1,2,3}};
+      cout << WorldNavigator::sumMinDistancesBinary(3, roads2) << endl;
+      vector<vector<int>> roads3 = {{0,1,10},{0,1,3}};
+      cout << WorldNavigator::sumMinDistancesBinary(2, roads3) << endl;
+      vector<vector<int>> roads4 = {{0,1,1},{1,2,2},{2,3,3}};
+      cout << WorldNavigator::sumMinDistancesBinary(4, roads4) << endl;
+      vector<vector<int>> roads5 = {{0,1,1000000000},{1,2,1000000000}};
+      cout << WorldNavigator::sumMinDistancesBinary(3, roads5) << endl;
+      vector<vector<int>> roads6 = {{0,1,800000000},{1,2,900000000},{0,2,500000000}};
+      cout << WorldNavigator::sumMinDistancesBinary(3, roads6) << endl;
 
 
     //----------------------------------------------------------------------------------
@@ -1044,276 +1045,376 @@ int main(){
     //goz2 seif :D
     //TESTING PATH EXISTS
 
-    // WorldNavigator wn;
-    //
-    // cout << "====== TESTING pathExists ======" << endl;
-    //
-    // // -------------------------------
-    // // Case 1: Disconnected components
-    // // -------------------------------
-    // vector<vector<int>> graph1 = {{0,1}, {0,2}, {3,4}};
-    // cout << wn.pathExists(5, graph1, 0, 4) << endl;
-    // // expected: 0 (false) -> 0 and 4 are in different components
-    //
-    // cout << wn.pathExists(5, graph1, 1, 2) << endl;
-    // // expected: 1 (true) -> 1 -> 0 -> 2
-    //
-    // // -------------------------------
-    // // Case 2: Direct connection
-    // // -------------------------------
-    // vector<vector<int>> graph2 = {{0,1}};
-    // cout << wn.pathExists(2, graph2, 0, 1) << endl;
-    // // expected: 1 (true)
-    //
-    // // -------------------------------
-    // // Case 3: source == destination
-    // // -------------------------------
-    // vector<vector<int>> graph3 = {{0,1}, {1,2}};
-    // cout << wn.pathExists(3, graph3, 2, 2) << endl;
-    // // expected: 1 (true) -> zero-length path
-    //
-    // // -------------------------------
-    // // Case 4: No edges at all
-    // // -------------------------------
-    // vector<vector<int>> graph4 = {};
-    // cout << wn.pathExists(3, graph4, 0, 1) << endl;
-    // // expected: 0 (false)
-    //
-    // cout << "\n====== TESTING minBribeCost ======" << endl;
-    //
-    // // ---------------------------------
-    // // Example 1: Connected graph (simple)
-    // // ---------------------------------
-    // // roadData: {u, v, goldCost, silverCost}
-    // vector<vector<int>> roads1 = {
-    //     {0,1,10,0},
-    //     {1,2,5,0},
-    //     {0,2,20,0}
-    // };
-    //
-    // long long cost = wn.minBribeCost(3, 3, 1, 1, roads1);
-    // cout << "MST cost (Example 1): " << cost << endl;
-    // // expected: 15 -> edges (1-2) + (0-1)
-    //
-    // // ---------------------------------
-    // // Example 2: Disconnected graph
-    // // ---------------------------------
-    // vector<vector<int>> roads2 = {
-    //     {0,1,5,0},
-    //     {2,3,7,0}
-    // };
-    //
-    // cost = wn.minBribeCost(4, 2, 1, 1, roads2);
-    // cout << "MST cost (Example 2): " << cost << endl;
-    // // expected: -1 (graph is disconnected)
-    //
-    // // ---------------------------------
-    // // Example 3: Gold + Silver costs
-    // // ---------------------------------
-    // vector<vector<int>> roads3 = {
-    //     {0,1,1,2}, // cost = 1*2 + 2*3 = 8
-    //     {1,2,2,1}, // cost = 2*2 + 1*3 = 7
-    //     {0,2,3,1}  // cost = 3*2 + 1*3 = 9
-    // };
-    //
-    // cost = wn.minBribeCost(3, 3, 2, 3, roads3);
-    // cout << "MST cost (Example 3): " << cost << endl;
-    // // expected: 15 -> edges (0-1) + (1-2)
-    //
-    // // ---------------------------------
-    // // Example 4: Single node graph
-    // // ---------------------------------
-    // vector<vector<int>> roads4 = {};
-    // cost = wn.minBribeCost(1, 0, 5, 5, roads4);
-    // cout << "MST cost (Example 4): " << cost << endl;
-    // // expected: 0 -> one node, no edges needed
+    WorldNavigator wn;
 
-//   //----------------------------------------------------------------------------------
-    //goz2 Youki
-   //  AuctionTree* tree = new ConcreteAuctionTree();
-   //
-   // cout << "===== INSERTIONS =====\n";
-   // tree->insertItem(10, 50);
-   // tree->insertItem(20, 40);
-   // tree->insertItem(30, 60);
-   // tree->insertItem(15, 40);
-   // tree->insertItem(25, 55);
-   // tree->insertItem(5, 50);
-   //
-   // cout << "\nTree after inserts:\n";
-   // ((ConcreteAuctionTree*)tree)->visualize();
-   //
-   // cout << "\n===== DELETE itemID 20 =====\n";
-   // tree->deleteItem(20);
-   // ((ConcreteAuctionTree*)tree)->visualize();
-   //
-   // cout << "\n===== DELETE itemID 10 =====\n";
-   // tree->deleteItem(10);
-   // ((ConcreteAuctionTree*)tree)->visualize();
-   //
-   // cout << "\n===== DELETE itemID 30 =====\n";
-   // tree->deleteItem(30);
-   // ((ConcreteAuctionTree*)tree)->visualize();
-   //
-   // cout << "\n===== FINAL TREE =====\n";
-   // ((ConcreteAuctionTree*)tree)->visualize();
-   //
-   // delete tree;
-   //  InventorySystem system;
-   //
-   //  vector<string> testStrings = {"uu", "uunn", "u", "nnuu", "uuuunn"};
-   //
-   //  for (const string& testStr : testStrings) {
-   //      long long count = system.countStringPossibilities(testStr);
-   //      cout << "String: " << testStr << " => Possibilities: " << count << endl;
-   //  }
-    //===================================================================================
-    // goz2 aboda
-    //
-    // ConcretePlayerTable roster;
-    //
-    // cout << "--- Test 1: Basic Insertion ---" << endl;
-    // roster.insert(1001, "Alice");
-    // roster.insert(2002, "Bob");
-    // roster.insert(3003, "Charlie");
-    // cout << "Inserted Alice, Bob, and Charlie." << endl;
-    //
-    // cout << "\n--- Test 2: Searching ---" << endl;
-    // string s1 = roster.search(1001);
-    // string s2 = roster.search(3003); // Non-existent
-    //
-    // cout << "Search 1001 (Should be Alice): " << (s1 == "" ? "Not Found" : s1) << endl;
-    // cout << "Search 9999 (Should be Empty): " << (s2 == "" ? "Not Found" : s2) << endl;
-    //
-    // cout << "\n--- Test 3: Filling the Table ---" << endl;
-    // // We already inserted 3. Let's fill the remaining 98 spots.
-    // // Table size is 101.
-    // for (int i = 0; i < 97; i++) {
-    //     // Just generating unique IDs
-    //     roster.insert(i + 5000, "FillerPlayer");
-    // }
-    // cout << "Filled the remaining 98 slots." << endl;
-    //
-    // cout << "\n--- Test 4: Insert into Full Table ---" << endl;
-    // // The table should now have 101 items. This next insert should fail.
-    // cout << "Attempting to insert one more player:" << endl;
-    // roster.insert(8888, "OverflowPlayer");
-    // roster.insert(8888, "OverflowPlayer");
-    // roster.insert(88218, "OverflowPlayer");
-    // ServerKernel kernel;
-    //
-    // vector<char> tasks1 = {'A','A','A','B','B','B'};
-    // cout << "Test 1 Output: " << kernel.minIntervals(tasks1, 3) << "\n";
+    cout << "====== TESTING pathExists ======" << endl;
 
-    // vector<char> tasks2 = {'A', 'A', 'A'};
-    // cout << "Test 2 Output: " << kernel.minIntervals(tasks2, 2) << " (Expected: 7)\n";
-    //
-    // vector<char> tasks3 = {'A', 'B', 'C'};
-    // cout << "Test 3 Output: " << kernel.minIntervals(tasks3, 2) << " (Expected: 3)\n";
-    //
-    // vector<char> tasks4 = {'A', 'A', 'A', 'B', 'B', 'B'};
-    // cout << "Test 4 Output: " << kernel.minIntervals(tasks4, 2) << " (Expected: 8)\n";
-//---------------------------------------------
-// Create leaderboard using base class pointer
+    // -------------------------------
+    // Case 1: Disconnected components
+    // -------------------------------
+    vector<vector<int>> graph1 = {{0,1}, {0,2}, {3,4}};
+    cout << wn.pathExists(5, graph1, 0, 4) << endl;
+    // expected: 0 (false) -> 0 and 4 are in different components
 
-    //     Leaderboard* leaderboard = createLeaderboard(16);
-    //
-    // // Test 1: Add players
-    // cout << "--- Test 1: Adding Players ---" << endl;
-    // leaderboard->addScore(101, 1500);
-    // leaderboard->addScore(102, 2000);
-    // leaderboard->addScore(103, 1800);
-    // leaderboard->addScore(104, 2200);
-    // leaderboard->addScore(105, 1600);
-    // cout << "Added 5 players with scores" << endl;
-    //
-    // // Test 2: Get top 3 players
-    // cout << "\n--- Test 2: Top 3 Players ---" << endl;
-    // vector<int> top3 = leaderboard->getTopN(3);
-    // cout << "Top 3 players:" << endl;
-    // for (int id : top3) {
-    //     cout << "Player ID: " << id << endl;
-    // }
-    //
-    // // Test 3: Remove a player
-    // cout << "\n--- Test 3: Remove Player 103 ---" << endl;
-    // leaderboard->removePlayer(103);
-    // cout << "Player 103 removed" << endl;
-    //
-    // // Test 4: Get top 5 after removal
-    // cout << "\n--- Test 4: Top 4 After Removal ---" << endl;
-    // vector<int> top4 = leaderboard->getTopN(4);
-    // cout << "Top 4 players after removal:" << endl;
-    // for (int id : top4) {
-    //     cout << "Player ID: " << id << endl;
-    // }
-    //
-    // // Test 5: Add new player with high score
-    // cout << "\n--- Test 5: Add Player 106 with Score 2100 ---" << endl;
-    // leaderboard->addScore(106, 2100);
-    // cout << "Player 106 added" << endl;
-    //
-    // // Test 6: Get top 5 after adding
-    // cout << "\n--- Test 6: Top 4 After Adding Player 106 ---" << endl;
-    // top4 = leaderboard->getTopN(4);
-    // cout << "Top 4 players:" << endl;
-    // for (int id : top4) {
-    //     cout << "Player ID: " << id << endl;
-    // }
-    //
-    // // Clean up
-    // delete leaderboard;
-    //
-    // // Test Inventory System
-    // cout << "\n\n=== INVENTORY SYSTEM TEST ===" << endl;
-    //
-    // // Test Case 1: Standard knapsack
-    // cout << "\n--- Test Case 1 ---" << endl;
-    // vector<pair<int, int>> items1 = {
-    //     {2, 3},   // weight: 2, value: 3
-    //     {3, 4},   // weight: 3, value: 4
-    //     {4, 5},   // weight: 4, value: 5
-    //     {5, 6}    // weight: 5, value: 6
-    // };
-    // int capacity1 = 5;
-    // int maxValue1 = InventorySystem::maximizeCarryValue(capacity1, items1);
-    // cout << "Capacity: " << capacity1 << endl;
-    // cout << "Items: (w:2,v:3), (w:3,v:4), (w:4,v:5), (w:5,v:6)" << endl;
-    // cout << "Maximum value: " << maxValue1 << endl;
-    //
-    // // Test Case 2: Items too heavy
-    // cout << "\n--- Test Case 2 ---" << endl;
-    // vector<pair<int, int>> items2 = {
-    //     {10, 100},
-    //     {20, 200}
-    // };
-    // int capacity2 = 5;
-    // int maxValue2 = InventorySystem::maximizeCarryValue(capacity2, items2);
-    // cout << "Capacity: " << capacity2 << endl;
-    // cout << "Items: (w:10,v:100), (w:20,v:200)" << endl;
-    // cout << "Maximum value: " << maxValue2 << endl;
-    //
-    // // Test Case 3: Multiple items fit
-    // cout << "\n--- Test Case 3 ---" << endl;
-    // vector<pair<int, int>> items3 = {
-    //     {1, 10},
-    //     {2, 20},
-    //     {3, 30}
-    // };
-    // int capacity3 = 10;
-    // int maxValue3 = InventorySystem::maximizeCarryValue(capacity3, items3);
-    // cout << "Capacity: " << capacity3 << endl;
-    // cout << "Items: (w:1,v:10), (w:2,v:20), (w:3,v:30)" << endl;
-    // cout << "Maximum value: " << maxValue3 << endl;
-    //
-    // // Test Case 4: Empty inventory
-    // cout << "\n--- Test Case 4 ---" << endl;
-    // vector<pair<int, int>> items4 = {};
-    // int capacity4 = 10;
-    // int maxValue4 = InventorySystem::maximizeCarryValue(capacity4, items4);
-    // cout << "Capacity: " << capacity4 << endl;
-    // cout << "Items: (empty)" << endl;
-    // cout << "Maximum value: " << maxValue4 << endl;
-    //
-    // return 0;
-}
+    cout << wn.pathExists(5, graph1, 1, 2) << endl;
+    // expected: 1 (true) -> 1 -> 0 -> 2
+
+    // -------------------------------
+    // Case 2: Direct connection
+    // -------------------------------
+    vector<vector<int>> graph2_test = {{0,1}};
+    cout << wn.pathExists(2, graph2_test, 0, 1) << endl;
+    // expected: 1 (true)
+
+    // -------------------------------
+    // Case 3: source == destination
+    // -------------------------------
+    vector<vector<int>> graph3_test = {{0,1}, {1,2}};
+    cout << wn.pathExists(3, graph3_test, 2, 2) << endl;
+    // expected: 1 (true) -> zero-length path
+
+    // -------------------------------
+    // Case 4: No edges at all
+    // -------------------------------
+    vector<vector<int>> graph4 = {};
+    cout << wn.pathExists(3, graph4, 0, 1) << endl;
+    // expected: 0 (false)
+
+    cout << "\n====== TESTING minBribeCost ======" << endl;
+
+    // ---------------------------------
+    // Example 1: Connected graph (simple)
+    // ---------------------------------
+    // roadData: {u, v, goldCost, silverCost}
+    vector<vector<int>> roads1 = {
+        {0,1,10,0},
+        {1,2,5,0},
+        {0,2,20,0}
+    };
+
+    long long cost = wn.minBribeCost(3, 3, 1, 1, roads1);
+    cout << "MST cost (Example 1): " << cost << endl;
+    // expected: 15 -> edges (1-2) + (0-1)
+
+    // ---------------------------------
+    // Example 2: Disconnected graph
+    // ---------------------------------
+    vector<vector<int>> roads2_test = {
+        {0,1,5,0},
+        {2,3,7,0}
+    };
+
+    cost = wn.minBribeCost(4, 2, 1, 1, roads2_test);
+    cout << "MST cost (Example 2): " << cost << endl;
+    // expected: -1 (graph is disconnected)
+
+    // ---------------------------------
+    // Example 3: Gold + Silver costs
+    // ---------------------------------
+    vector<vector<int>> roads3_test = {
+        {0,1,1,2}, // cost = 1*2 + 2*3 = 8
+        {1,2,2,1}, // cost = 2*2 + 1*3 = 7
+        {0,2,3,1}  // cost = 3*2 + 1*3 = 9
+    };
+
+    cost = wn.minBribeCost(3, 3, 2, 3, roads3_test);
+    cout << "MST cost (Example 3): " << cost << endl;
+    // expected: 15 -> edges (0-1) + (1-2)
+
+    // ---------------------------------
+    // Example 4: Single node graph
+    // ---------------------------------
+    vector<vector<int>> roads4_test = {};
+    cost = wn.minBribeCost(1, 0, 5, 5, roads4_test);
+    cout << "MST cost (Example 4): " << cost << endl;
+    // expected: 0 -> one node, no edges needed
+
+
+   //----------------------------------------------------------------------------------
+    // goz2 Youki
+      cout << "========== TESTING countStringPossibilities ==========\n";
+
+     // Case 1: empty string
+     cout << InventorySystem::countStringPossibilities("") << endl;
+     // expected: 1 (empty string has one valid decoding)
+
+     // Case 2: no valid pairs
+     cout << InventorySystem::countStringPossibilities("abc") << endl;
+     // expected: 1 (only single-character decoding)
+
+     // Case 3: single valid pair "uu"
+     cout << InventorySystem::countStringPossibilities("uu") << endl;
+     // expected: 2 -> "u u" or "w"
+
+     // Case 4: single valid pair "nn"
+     cout << InventorySystem::countStringPossibilities("nn") << endl;
+     // expected: 2 -> "n n" or "m"
+
+     // Case 5: overlapping pairs
+     cout << InventorySystem::countStringPossibilities("uuuu") << endl;
+     // expected: 5
+     // dp explanation: Fibonacci-like (uu)(uu), (u)(uu)(u), etc.
+
+     // Case 6: mixed valid and invalid pairs
+     cout << InventorySystem::countStringPossibilities("uunn") << endl;
+     // expected: 4
+     // uu nn combinations independently: 2 * 2 = 4
+
+     // Case 7: long string (stress test)
+     cout << InventorySystem::countStringPossibilities("uuuuuuuuuu") << endl;
+     // expected: Fibonacci growth, modulo-safe
+
+     AuctionTree* tree = new ConcreteAuctionTree();
+
+ cout << "===== EDGE CASE TESTING =====\n";
+
+ /* ================= EMPTY TREE ================= */
+ cout << "\n--- Delete from empty tree ---\n";
+ tree->deleteItem(100);
+ ((ConcreteAuctionTree*)tree)->visualize();
+ /*
+ Expected:
+ [empty tree]
+ (no crash)
+ */
+
+ /* ================= SINGLE NODE ================= */
+ cout << "\n--- Insert single node ---\n";
+ tree->insertItem(1, 100);
+ ((ConcreteAuctionTree*)tree)->visualize();
+ /*
+ Expected:
+ Root only, BLACK
+ */
+
+ cout << "\n--- Delete root node ---\n";
+ tree->deleteItem(1);
+ ((ConcreteAuctionTree*)tree)->visualize();
+ /*
+ Expected:
+ [empty tree]
+ */
+
+ /* ================= DUPLICATE PRICES ================= */
+ cout << "\n--- Insert nodes with same price ---\n";
+ tree->insertItem(10, 50);
+ tree->insertItem(20, 50);
+ tree->insertItem(5, 50);
+ tree->insertItem(15, 50);
+ ((ConcreteAuctionTree*)tree)->visualize();
+ /*
+ Expected:
+ Ordered by itemID when prices equal
+ RB properties preserved
+ */
+
+ /* ================= DELETE LEAF ================= */
+ cout << "\n--- Delete leaf node (itemID 5) ---\n";
+ tree->deleteItem(5);
+ ((ConcreteAuctionTree*)tree)->visualize();
+ /*
+ Expected:
+ Leaf removed
+ No RB violation
+ */
+
+ /* ================= DELETE NODE WITH ONE CHILD ================= */
+ cout << "\n--- Delete node with one child (itemID 15) ---\n";
+ tree->deleteItem(15);
+ ((ConcreteAuctionTree*)tree)->visualize();
+ /*
+ Expected:
+ Proper transplant
+ Tree still balanced
+ */
+
+ /* ================= DELETE NODE WITH TWO CHILDREN ================= */
+ cout << "\n--- Insert more nodes ---\n";
+ tree->insertItem(25, 60);
+ tree->insertItem(30, 70);
+ tree->insertItem(12, 55);
+ ((ConcreteAuctionTree*)tree)->visualize();
+
+ cout << "\n--- Delete node with two children (itemID 20) ---\n";
+ tree->deleteItem(20);
+ ((ConcreteAuctionTree*)tree)->visualize();
+ /*
+ Expected:
+ Successor swap
+ deleteFix executed
+ Root remains BLACK
+ */
+
+ /* ================= DELETE NON-EXISTING ================= */
+ cout << "\n--- Delete non-existing item ---\n";
+ tree->deleteItem(999);
+ ((ConcreteAuctionTree*)tree)->visualize();
+ /*
+ Expected:
+ No change
+ No crash
+ */
+
+ /* ================= DELETE ALL ================= */
+ cout << "\n--- Delete all remaining nodes ---\n";
+ tree->deleteItem(10);
+ tree->deleteItem(12);
+ tree->deleteItem(25);
+ tree->deleteItem(30);
+ ((ConcreteAuctionTree*)tree)->visualize();
+ /*
+ Expected:
+ [empty tree]
+ */
+
+ delete tree;
+    // ===================================================================================
+    //  goz2 aboda
+
+     ConcretePlayerTable roster;
+
+     cout << "--- Test 1: Basic Insertion ---" << endl;
+     roster.insert(1001, "Alice");
+     roster.insert(2002, "Bob");
+     roster.insert(3003, "Charlie");
+     cout << "Inserted Alice, Bob, and Charlie." << endl;
+
+     cout << "\n--- Test 2: Searching ---" << endl;
+     string s1 = roster.search(1001);
+     string s2 = roster.search(3003); // Non-existent
+
+     cout << "Search 1001 (Should be Alice): " << (s1 == "" ? "Not Found" : s1) << endl;
+     cout << "Search 9999 (Should be Empty): " << (s2 == "" ? "Not Found" : s2) << endl;
+
+     cout << "\n--- Test 3: Filling the Table ---" << endl;
+     // We already inserted 3. Let's fill the remaining 98 spots.
+     // Table size is 101.
+     for (int i = 0; i < 97; i++) {
+         // Just generating unique IDs
+         roster.insert(i + 5000, "FillerPlayer");
+     }
+     cout << "Filled the remaining 98 slots." << endl;
+
+     cout << "\n--- Test 4: Insert into Full Table ---" << endl;
+     // The table should now have 101 items. This next insert should fail.
+     cout << "Attempting to insert one more player:" << endl;
+     roster.insert(8888, "OverflowPlayer");
+     roster.insert(8888, "OverflowPlayer");
+     roster.insert(88218, "OverflowPlayer");
+     ServerKernel kernel;
+
+     vector<char> tasks1 = {'A','A','A','B','B','B'};
+     cout << "Test 1 Output: " << kernel.minIntervals(tasks1, 3) << "\n";
+
+     vector<char> tasks2 = {'A', 'A', 'A'};
+     cout << "Test 2 Output: " << kernel.minIntervals(tasks2, 2) << " (Expected: 7)\n";
+
+     vector<char> tasks3 = {'A', 'B', 'C'};
+     cout << "Test 3 Output: " << kernel.minIntervals(tasks3, 2) << " (Expected: 3)\n";
+
+     vector<char> tasks4 = {'A', 'A', 'A', 'B', 'B', 'B'};
+     cout << "Test 4 Output: " << kernel.minIntervals(tasks4, 2) << " (Expected: 8)\n";
+// ---------------------------------------------
+ // Create leaderboard using base class pointer
+
+         Leaderboard* leaderboard = createLeaderboard(16);
+
+     // Test 1: Add players
+     cout << "--- Test 1: Adding Players ---" << endl;
+     leaderboard->addScore(101, 1500);
+     leaderboard->addScore(102, 2000);
+     leaderboard->addScore(103, 1800);
+     leaderboard->addScore(104, 2200);
+     leaderboard->addScore(105, 1600);
+     cout << "Added 5 players with scores" << endl;
+
+     // Test 2: Get top 3 players
+     cout << "\n--- Test 2: Top 3 Players ---" << endl;
+     vector<int> top3 = leaderboard->getTopN(3);
+     cout << "Top 3 players:" << endl;
+     for (int id : top3) {
+         cout << "Player ID: " << id << endl;
+     }
+
+     // Test 3: Remove a player
+     cout << "\n--- Test 3: Remove Player 103 ---" << endl;
+     leaderboard->removePlayer(103);
+     cout << "Player 103 removed" << endl;
+
+     // Test 4: Get top 5 after removal
+     cout << "\n--- Test 4: Top 4 After Removal ---" << endl;
+     vector<int> top4 = leaderboard->getTopN(4);
+     cout << "Top 4 players after removal:" << endl;
+     for (int id : top4) {
+         cout << "Player ID: " << id << endl;
+     }
+
+     // Test 5: Add new player with high score
+     cout << "\n--- Test 5: Add Player 106 with Score 2100 ---" << endl;
+     leaderboard->addScore(106, 2100);
+     cout << "Player 106 added" << endl;
+
+     // Test 6: Get top 5 after adding
+     cout << "\n--- Test 6: Top 4 After Adding Player 106 ---" << endl;
+     top4 = leaderboard->getTopN(4);
+     cout << "Top 4 players:" << endl;
+     for (int id : top4) {
+         cout << "Player ID: " << id << endl;
+     }
+
+     // Clean up
+     delete leaderboard;
+
+     // Test Inventory System
+     cout << "\n\n=== INVENTORY SYSTEM TEST ===" << endl;
+
+     // Test Case 1: Standard knapsack
+     cout << "\n--- Test Case 1 ---" << endl;
+     vector<pair<int, int>> items1 = {
+         {2, 3},   // weight: 2, value: 3
+         {3, 4},   // weight: 3, value: 4
+         {4, 5},   // weight: 4, value: 5
+         {5, 6}    // weight: 5, value: 6
+     };
+     int capacity1 = 5;
+     int maxValue1 = InventorySystem::maximizeCarryValue(capacity1, items1);
+     cout << "Capacity: " << capacity1 << endl;
+     cout << "Items: (w:2,v:3), (w:3,v:4), (w:4,v:5), (w:5,v:6)" << endl;
+     cout << "Maximum value: " << maxValue1 << endl;
+
+     // Test Case 2: Items too heavy
+     cout << "\n--- Test Case 2 ---" << endl;
+     vector<pair<int, int>> items2 = {
+         {10, 100},
+         {20, 200}
+     };
+     int capacity2 = 5;
+     int maxValue2 = InventorySystem::maximizeCarryValue(capacity2, items2);
+     cout << "Capacity: " << capacity2 << endl;
+     cout << "Items: (w:10,v:100), (w:20,v:200)" << endl;
+     cout << "Maximum value: " << maxValue2 << endl;
+
+     // Test Case 3: Multiple items fit
+     cout << "\n--- Test Case 3 ---" << endl;
+     vector<pair<int, int>> items3 = {
+         {1, 10},
+         {2, 20},
+         {3, 30}
+     };
+     int capacity3 = 10;
+     int maxValue3 = InventorySystem::maximizeCarryValue(capacity3, items3);
+     cout << "Capacity: " << capacity3 << endl;
+     cout << "Items: (w:1,v:10), (w:2,v:20), (w:3,v:30)" << endl;
+     cout << "Maximum value: " << maxValue3 << endl;
+
+     // Test Case 4: Empty inventory
+     cout << "\n--- Test Case 4 ---" << endl;
+     vector<pair<int, int>> items4 = {};
+     int capacity4 = 10;
+     int maxValue4 = InventorySystem::maximizeCarryValue(capacity4, items4);
+     cout << "Capacity: " << capacity4 << endl;
+     cout << "Items: (empty)" << endl;
+     cout << "Maximum value: " << maxValue4 << endl;
+
+     return 0;
+ }
