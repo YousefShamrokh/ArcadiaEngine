@@ -88,7 +88,7 @@ public:
         }
 
         //if there is no place in the hash table show that the table is full
-        cout<<"Error: Table is full";
+        cout<<"Error: Table is full\n";
     }
 
     string search(int playerID) override {
@@ -1281,30 +1281,32 @@ int main(){
 
      cout << "\n--- Test 2: Searching ---" << endl;
      string s1 = roster.search(1001);
-     string s2 = roster.search(3003); // Non-existent
+     string s2 = roster.search(4004); // Non-existent
 
      cout << "Search 1001 (Should be Alice): " << (s1 == "" ? "Not Found" : s1) << endl;
      cout << "Search 9999 (Should be Empty): " << (s2 == "" ? "Not Found" : s2) << endl;
 
-     cout << "\n--- Test 3: Filling the Table ---" << endl;
+     cout << "\n--- Test 3: Trying to insert player with the same ID ---" << endl;
+     roster.insert(3003, "SamePlayer");
+
+     cout << "\n--- Test 4: Filling the Table ---" << endl;
      // We already inserted 3. Let's fill the remaining 98 spots.
      // Table size is 101.
-     for (int i = 0; i < 97; i++) {
+     for (int i = 0; i < 98; i++) {
          // Just generating unique IDs
          roster.insert(i + 5000, "FillerPlayer");
      }
      cout << "Filled the remaining 98 slots." << endl;
 
-     cout << "\n--- Test 4: Insert into Full Table ---" << endl;
+     cout << "\n--- Test 5: Insert into Full Table ---" << endl;
      // The table should now have 101 items. This next insert should fail.
      cout << "Attempting to insert one more player:" << endl;
      roster.insert(8888, "OverflowPlayer");
-     roster.insert(8888, "OverflowPlayer");
-     roster.insert(88218, "OverflowPlayer");
-     ServerKernel kernel;
 
+     ServerKernel kernel;
+     cout << "\n--- Part D ---" << endl;
      vector<char> tasks1 = {'A','A','A','B','B','B'};
-     cout << "Test 1 Output: " << kernel.minIntervals(tasks1, 3) << "\n";
+     cout << "Test 1 Output: " << kernel.minIntervals(tasks1, 3) << " (Expected: 10)\n";
 
      vector<char> tasks2 = {'A', 'A', 'A'};
      cout << "Test 2 Output: " << kernel.minIntervals(tasks2, 2) << " (Expected: 7)\n";
