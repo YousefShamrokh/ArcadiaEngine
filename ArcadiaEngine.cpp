@@ -998,47 +998,44 @@ AuctionTree* createAuctionTree() {
 int main(){
 //goz2 Essam
 //                Test cases for optimizeLootSplit
-     vector<int> coins = {3,4,8};
-     cout << InventorySystem::optimizeLootSplit(3,coins) << endl;
-     vector<int> coins1 = {};
-     cout << InventorySystem::optimizeLootSplit(0, coins1)<< endl;
-     vector<int> coins2 = {7};
-     cout << InventorySystem::optimizeLootSplit(1, coins2) << endl;
-     vector<int> coins3 = {3,8};
-     cout << InventorySystem::optimizeLootSplit(2, coins3)<<endl;
-     vector<int> coins4 = {1,5,11,5};
-     cout << InventorySystem::optimizeLootSplit(4, coins4) <<endl;
-     vector<int> coins5 = {1,2,7};
-     cout << InventorySystem::optimizeLootSplit(3, coins5)<<endl;
-     vector<int> coins6 = {8,6,5};
-     cout << InventorySystem::optimizeLootSplit(3, coins6)<<endl;
-     vector<int> coins7 = {1000,1,1,1,1};
-     cout << InventorySystem::optimizeLootSplit(5, coins7) << endl;
-     vector<int> coins8 = {100,100,100,100};
-     cout << InventorySystem::optimizeLootSplit(4, coins8)<<endl;
+    cout << "====== TESTING optimizeLootSplit ======" << endl;
+     vector<int> coins = {3,4,8};// difference is abs(1)
+     cout << InventorySystem::optimizeLootSplit(3,coins) << endl; // expected 1
+     vector<int> coins1 = {}; // empty
+     cout << InventorySystem::optimizeLootSplit(0, coins1)<< endl; //expected 0
+     vector<int> coins2 = {7}; // one coin
+     cout << InventorySystem::optimizeLootSplit(1, coins2) << endl;//expected 7
+     vector<int> coins3 = {3,8}; // just 2 coins
+     cout << InventorySystem::optimizeLootSplit(2, coins3)<<endl;// expected 5
+     vector<int> coins4 = {1,5,11,5}; //partition case
+     cout << InventorySystem::optimizeLootSplit(4, coins4) <<endl; // expected 0
+     vector<int> coins5 = {1,2,7}; //no perfect partition case
+     cout << InventorySystem::optimizeLootSplit(3, coins5)<<endl; //expected 4
+     vector<int> coins6 = {8,6,5}; //near half case
+     cout << InventorySystem::optimizeLootSplit(3, coins6)<<endl; //expected 3
+     vector<int> coins7 = {1000,1,1,1,1}; // uneven due to a huge outlier split
+     cout << InventorySystem::optimizeLootSplit(5, coins7) << endl; //expected 996
+     vector<int> coins8 = {100,100,100,100}; //equal large values
+     cout << InventorySystem::optimizeLootSplit(4, coins8)<<endl; //expected 0
 
 //              Test cases for sumMinDistancesBinary
-      vector<vector<int>> graph= {{0,1,1},{1,2,2}};
-      vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
-      vector<vector<int>> graph3= {{0,1,4}};
-      cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl;
-      cout << WorldNavigator::sumMinDistancesBinary(2,graph3) << endl;
-      cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl;
-      vector<vector<int>> empty = {};
-      cout << WorldNavigator::sumMinDistancesBinary(1,empty) << endl;
-      vector<vector<int>> roads = {{0,1,5}};
-      cout << WorldNavigator::sumMinDistancesBinary(2, roads) << endl;
-      vector<vector<int>> roads2 = {{0,1,2},{1,2,3}};
-      cout << WorldNavigator::sumMinDistancesBinary(3, roads2) << endl;
-      vector<vector<int>> roads3 = {{0,1,10},{0,1,3}};
-      cout << WorldNavigator::sumMinDistancesBinary(2, roads3) << endl;
-      vector<vector<int>> roads4 = {{0,1,1},{1,2,2},{2,3,3}};
-      cout << WorldNavigator::sumMinDistancesBinary(4, roads4) << endl;
-      vector<vector<int>> roads5 = {{0,1,1000000000},{1,2,1000000000}};
-      cout << WorldNavigator::sumMinDistancesBinary(3, roads5) << endl;
-      vector<vector<int>> roads6 = {{0,1,800000000},{1,2,900000000},{0,2,500000000}};
-      cout << WorldNavigator::sumMinDistancesBinary(3, roads6) << endl;
-
+    cout << "====== TESTING Sum Distances Binary ======" << endl;
+      vector<vector<int>> graph= {{0,1,1},{1,2,2}}; // testing from examples in pdf
+      cout << WorldNavigator::sumMinDistancesBinary(3,graph) << endl; //expected 110
+      vector<vector<int>> graph2= {{0,1,2},{0,2,8}};// testing from examples in pdf
+      cout << WorldNavigator::sumMinDistancesBinary(3,graph2) << endl; //expected 1010
+      vector<vector<int>> graph3= {{0,1,4}};// testing from examples in pdf
+      cout << WorldNavigator::sumMinDistancesBinary(2,graph3) << endl; //expected 100
+      vector<vector<int>> empty = {}; //empty test
+      cout << WorldNavigator::sumMinDistancesBinary(1,empty) << endl;//expected 0
+      vector<vector<int>> roads = {{0,1,8}}; //one edge between 2 cities
+      cout << WorldNavigator::sumMinDistancesBinary(2, roads) << endl; //expected 1000
+      vector<vector<int>> roads2 = {{0,1,2},{1,2,4}}; //3 cities in straight path directed
+      cout << WorldNavigator::sumMinDistancesBinary(3, roads2) << endl;//expected 1100
+      vector<vector<int>> roads3 = {{0,1,10},{0,1,4}};  // multiple edges same node
+      cout << WorldNavigator::sumMinDistancesBinary(2, roads3) << endl; //expected 100, lesser weight on edge
+      vector<vector<int>> roads5 = {{0,1,1000000000},{1,2,1000000000}};// testing with big numbers
+      cout << WorldNavigator::sumMinDistancesBinary(3, roads5) << endl; //expected 11101110011010110010100000000000
 
     //----------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------
