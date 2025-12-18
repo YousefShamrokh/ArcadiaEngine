@@ -993,9 +993,9 @@ AuctionTree* createAuctionTree() {
 }
 }
 
-int main(){
-    //goz2 Essam
-    vector<int> v = {3,4,8};
+// int main(){
+//     //goz2 Essam
+//     vector<int> v = {3,4,8};
 //    cout << InventorySystem::optimizeLootSplit(v.size(),v) << endl;
 //    vector<vector<int>> graph= {{0,1,1},{1,2,2}};
 //    vector<vector<int>> graph2= {{0,1,2},{0,2,8}};
@@ -1125,104 +1125,104 @@ int main(){
 //---------------------------------------------
 // Create leaderboard using base class pointer
 
-        Leaderboard* leaderboard = createLeaderboard(16);
-
-    // Test 1: Add players
-    cout << "--- Test 1: Adding Players ---" << endl;
-    leaderboard->addScore(101, 1500);
-    leaderboard->addScore(102, 2000);
-    leaderboard->addScore(103, 1800);
-    leaderboard->addScore(104, 2200);
-    leaderboard->addScore(105, 1600);
-    cout << "Added 5 players with scores" << endl;
-
-    // Test 2: Get top 3 players
-    cout << "\n--- Test 2: Top 3 Players ---" << endl;
-    vector<int> top3 = leaderboard->getTopN(3);
-    cout << "Top 3 players:" << endl;
-    for (int id : top3) {
-        cout << "Player ID: " << id << endl;
-    }
-
-    // Test 3: Remove a player
-    cout << "\n--- Test 3: Remove Player 103 ---" << endl;
-    leaderboard->removePlayer(103);
-    cout << "Player 103 removed" << endl;
-
-    // Test 4: Get top 5 after removal
-    cout << "\n--- Test 4: Top 4 After Removal ---" << endl;
-    vector<int> top4 = leaderboard->getTopN(4);
-    cout << "Top 4 players after removal:" << endl;
-    for (int id : top4) {
-        cout << "Player ID: " << id << endl;
-    }
-
-    // Test 5: Add new player with high score
-    cout << "\n--- Test 5: Add Player 106 with Score 2100 ---" << endl;
-    leaderboard->addScore(106, 2100);
-    cout << "Player 106 added" << endl;
-
-    // Test 6: Get top 5 after adding
-    cout << "\n--- Test 6: Top 4 After Adding Player 106 ---" << endl;
-    top4 = leaderboard->getTopN(4);
-    cout << "Top 4 players:" << endl;
-    for (int id : top4) {
-        cout << "Player ID: " << id << endl;
-    }
-
-    // Clean up
-    delete leaderboard;
-
-    // Test Inventory System
-    cout << "\n\n=== INVENTORY SYSTEM TEST ===" << endl;
-
-    // Test Case 1: Standard knapsack
-    cout << "\n--- Test Case 1 ---" << endl;
-    vector<pair<int, int>> items1 = {
-        {2, 3},   // weight: 2, value: 3
-        {3, 4},   // weight: 3, value: 4
-        {4, 5},   // weight: 4, value: 5
-        {5, 6}    // weight: 5, value: 6
-    };
-    int capacity1 = 5;
-    int maxValue1 = InventorySystem::maximizeCarryValue(capacity1, items1);
-    cout << "Capacity: " << capacity1 << endl;
-    cout << "Items: (w:2,v:3), (w:3,v:4), (w:4,v:5), (w:5,v:6)" << endl;
-    cout << "Maximum value: " << maxValue1 << endl;
-
-    // Test Case 2: Items too heavy
-    cout << "\n--- Test Case 2 ---" << endl;
-    vector<pair<int, int>> items2 = {
-        {10, 100},
-        {20, 200}
-    };
-    int capacity2 = 5;
-    int maxValue2 = InventorySystem::maximizeCarryValue(capacity2, items2);
-    cout << "Capacity: " << capacity2 << endl;
-    cout << "Items: (w:10,v:100), (w:20,v:200)" << endl;
-    cout << "Maximum value: " << maxValue2 << endl;
-
-    // Test Case 3: Multiple items fit
-    cout << "\n--- Test Case 3 ---" << endl;
-    vector<pair<int, int>> items3 = {
-        {1, 10},
-        {2, 20},
-        {3, 30}
-    };
-    int capacity3 = 10;
-    int maxValue3 = InventorySystem::maximizeCarryValue(capacity3, items3);
-    cout << "Capacity: " << capacity3 << endl;
-    cout << "Items: (w:1,v:10), (w:2,v:20), (w:3,v:30)" << endl;
-    cout << "Maximum value: " << maxValue3 << endl;
-
-    // Test Case 4: Empty inventory
-    cout << "\n--- Test Case 4 ---" << endl;
-    vector<pair<int, int>> items4 = {};
-    int capacity4 = 10;
-    int maxValue4 = InventorySystem::maximizeCarryValue(capacity4, items4);
-    cout << "Capacity: " << capacity4 << endl;
-    cout << "Items: (empty)" << endl;
-    cout << "Maximum value: " << maxValue4 << endl;
-
-    return 0;
-}
+    //     Leaderboard* leaderboard = createLeaderboard(16);
+    //
+    // // Test 1: Add players
+    // cout << "--- Test 1: Adding Players ---" << endl;
+    // leaderboard->addScore(101, 1500);
+    // leaderboard->addScore(102, 2000);
+    // leaderboard->addScore(103, 1800);
+    // leaderboard->addScore(104, 2200);
+    // leaderboard->addScore(105, 1600);
+    // cout << "Added 5 players with scores" << endl;
+    //
+    // // Test 2: Get top 3 players
+    // cout << "\n--- Test 2: Top 3 Players ---" << endl;
+    // vector<int> top3 = leaderboard->getTopN(3);
+    // cout << "Top 3 players:" << endl;
+    // for (int id : top3) {
+    //     cout << "Player ID: " << id << endl;
+    // }
+    //
+    // // Test 3: Remove a player
+    // cout << "\n--- Test 3: Remove Player 103 ---" << endl;
+    // leaderboard->removePlayer(103);
+    // cout << "Player 103 removed" << endl;
+    //
+    // // Test 4: Get top 5 after removal
+    // cout << "\n--- Test 4: Top 4 After Removal ---" << endl;
+    // vector<int> top4 = leaderboard->getTopN(4);
+    // cout << "Top 4 players after removal:" << endl;
+    // for (int id : top4) {
+    //     cout << "Player ID: " << id << endl;
+    // }
+    //
+    // // Test 5: Add new player with high score
+    // cout << "\n--- Test 5: Add Player 106 with Score 2100 ---" << endl;
+    // leaderboard->addScore(106, 2100);
+    // cout << "Player 106 added" << endl;
+    //
+    // // Test 6: Get top 5 after adding
+    // cout << "\n--- Test 6: Top 4 After Adding Player 106 ---" << endl;
+    // top4 = leaderboard->getTopN(4);
+    // cout << "Top 4 players:" << endl;
+    // for (int id : top4) {
+    //     cout << "Player ID: " << id << endl;
+    // }
+    //
+    // // Clean up
+    // delete leaderboard;
+    //
+    // // Test Inventory System
+    // cout << "\n\n=== INVENTORY SYSTEM TEST ===" << endl;
+    //
+    // // Test Case 1: Standard knapsack
+    // cout << "\n--- Test Case 1 ---" << endl;
+    // vector<pair<int, int>> items1 = {
+    //     {2, 3},   // weight: 2, value: 3
+    //     {3, 4},   // weight: 3, value: 4
+    //     {4, 5},   // weight: 4, value: 5
+    //     {5, 6}    // weight: 5, value: 6
+    // };
+    // int capacity1 = 5;
+    // int maxValue1 = InventorySystem::maximizeCarryValue(capacity1, items1);
+    // cout << "Capacity: " << capacity1 << endl;
+    // cout << "Items: (w:2,v:3), (w:3,v:4), (w:4,v:5), (w:5,v:6)" << endl;
+    // cout << "Maximum value: " << maxValue1 << endl;
+    //
+    // // Test Case 2: Items too heavy
+    // cout << "\n--- Test Case 2 ---" << endl;
+    // vector<pair<int, int>> items2 = {
+    //     {10, 100},
+    //     {20, 200}
+    // };
+    // int capacity2 = 5;
+    // int maxValue2 = InventorySystem::maximizeCarryValue(capacity2, items2);
+    // cout << "Capacity: " << capacity2 << endl;
+    // cout << "Items: (w:10,v:100), (w:20,v:200)" << endl;
+    // cout << "Maximum value: " << maxValue2 << endl;
+    //
+    // // Test Case 3: Multiple items fit
+    // cout << "\n--- Test Case 3 ---" << endl;
+    // vector<pair<int, int>> items3 = {
+    //     {1, 10},
+    //     {2, 20},
+    //     {3, 30}
+    // };
+    // int capacity3 = 10;
+    // int maxValue3 = InventorySystem::maximizeCarryValue(capacity3, items3);
+    // cout << "Capacity: " << capacity3 << endl;
+    // cout << "Items: (w:1,v:10), (w:2,v:20), (w:3,v:30)" << endl;
+    // cout << "Maximum value: " << maxValue3 << endl;
+    //
+    // // Test Case 4: Empty inventory
+    // cout << "\n--- Test Case 4 ---" << endl;
+    // vector<pair<int, int>> items4 = {};
+    // int capacity4 = 10;
+    // int maxValue4 = InventorySystem::maximizeCarryValue(capacity4, items4);
+    // cout << "Capacity: " << capacity4 << endl;
+    // cout << "Items: (empty)" << endl;
+    // cout << "Maximum value: " << maxValue4 << endl;
+    //
+    // return 0;
+// }
